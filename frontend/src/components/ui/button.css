@@ -1,0 +1,28 @@
+.btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: black;
+}
+
+.btn-nav-page{
+    background-color: transparent;
+    border: 1px;
+    color: var(--button);
+    font-weight: bold;
+}
+
+.btn-nav-page:hover{
+    background-color: lightblue;
+    opacity: 0.8;
+}

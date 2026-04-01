@@ -3,15 +3,32 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 24px;
-  background-color: grey;
+  background-color: var(--bg);
   color: var(--text);
+  border-bottom: 3px solid var(--primary);
 }
 
 .logo{
-  /* background-color: black; */
   color: black;
   display: flex;
+  align-items: center;
 }
+.logo button{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  padding: 0;
+}
+.logo button:hover{
+  opacity: 0.8;
+}
+
+
 .logo img {
   height: 40px;
   width: auto;
@@ -20,30 +37,115 @@
 .logo h1{
   font-size: 20px;
   margin: 0;
+  color: black;
+
 }
 
 .pages { 
   display: flex;
   gap: 20px;
+  flex: 1;
+  justify-content: center;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.pages button{
+/* .pages button{
   background-color: transparent;
   border: 1px;
-  color: black;
+  color: var(--button);
+  font-weight: bold;
 }
 .pages button:hover{
-  background-color: grey;
-}
+  background-color: lightblue;
+  opacity: 0.8;
+} */
 
+
+
+.profile-area{
+  position: relative;
+}
 .profile-area button {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  background-color: transparent;
+  border: 3px solid var(--primary);
+  color: black;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 200px;
   padding: 8px 14px;
-  border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: all 0.2s ease;
+
 }
+
+
+/* .profile-area img {
+  width: 20px;
+  height: 20px;
+} */
+
+
 .profile-area button:hover {
-  background-color: #1d4ed8;
+  background-color: lightblue;
+  /* background-color: rgba(0, 0, 0, 0.05); */
+
 }
+
+.profile-area.open button{
+  background: grey;
+}
+
+.profile-area.open button:hover {
+  background-color: lightblue;
+  /* background-color: rgba(0, 0, 0, 0.05); */
+
+}
+.username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  color: var(--primary);
+  font-weight: bold;
+}
+.icon{
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.arrow {
+  color: var(--primary);
+  transition: transform 0.2s ease;
+
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+
+.dropdown {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: transparent;
+  /* border: 1px solid black; */
+  /* padding: 10px; */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+}
+/* .dropdown button{
+   background: grey; 
+} */
+
