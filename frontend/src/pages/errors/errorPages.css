@@ -1,0 +1,176 @@
+.error-screen,
+.loading-screen {
+  min-height: 100vh;
+  background: #f2f2f4;
+  color: #111827;
+}
+
+.error-topbar,
+.loading-topbar {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 2px solid #2f3947;
+  background: #f6f6f7;
+  box-sizing: border-box;
+}
+
+.error-brand-button,
+.error-canvas-button,
+.loading-brand-button,
+.loading-canvas-button {
+  font: inherit;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.error-brand-button,
+.loading-brand-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.error-brand-mark,
+.loading-brand-mark {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fb5a00;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.error-brand-name,
+.loading-brand-name {
+  font-size: 16px;
+}
+
+.error-canvas-button,
+.loading-canvas-button {
+  border: 1px solid #9aa3af;
+  background: #f4f4f5;
+  color: #374151;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.error-content,
+.loading-content {
+  min-height: calc(100vh - 50px);
+  display: grid;
+  place-items: center;
+  padding: 36px 16px;
+  box-sizing: border-box;
+}
+
+.error-card,
+.loading-card {
+  width: min(320px, 100%);
+  border: 2px solid #364152;
+  background: #f3f3f4;
+  padding: 28px 22px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.error-code {
+  margin: 0 0 6px;
+  font-size: 78px;
+  line-height: 1;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.error-title {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.error-description,
+.loading-description {
+  margin: 0 0 18px;
+  font-size: 11px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.error-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.error-primary-button,
+.error-secondary-button {
+  height: 34px;
+  padding: 0 16px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.error-primary-button {
+  border: 0;
+  background: #fb5a00;
+  color: #ffffff;
+}
+
+.error-secondary-button {
+  border: 2px solid #364152;
+  background: #f3f3f4;
+  color: #111827;
+}
+
+.loading-spinner {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 16px;
+  border: 4px solid rgba(251, 90, 0, 0.2);
+  border-top-color: #fb5a00;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+.loading-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .error-topbar,
+  .loading-topbar {
+    padding: 0 16px;
+  }
+
+  .error-card,
+  .loading-card {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .error-code {
+    font-size: 64px;
+  }
+}
