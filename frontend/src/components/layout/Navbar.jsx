@@ -111,6 +111,7 @@ function Navbar({user}) {
               <div className="dropdown">
                 <Button onClick={handleProfileClick} className="drop">Profile</Button>
                 <Button onClick={handleDashboardClick}>DashBoard</Button>
+                <Button onClick={() => navigate("/admin/dashboard")}>Admin Dashboard</Button>
                 <Button onClick={handleSettingsClick}>Settings</Button>
                 <Button onClick={handleLogoutClick}>Logout</Button>
               </div>
