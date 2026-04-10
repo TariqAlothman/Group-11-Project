@@ -5,12 +5,14 @@ import logo from "../../assets/icons/cooksmart-logo.png";
 import userIcon from "../../assets/icons/user-icon.svg";
 import dropDownIcon from "../../assets/icons/dropdown-icon.svg";
 import Button from "../ui/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 function Navbar({user}) {
   const [dropDown, setDropDown] = useState(false); //Profile Dropdown
   const navigate = useNavigate();
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   // button handlers
 
@@ -74,18 +76,37 @@ function Navbar({user}) {
       </div>
 
       <div className="pages">
-        <Button onClick={handleBrowseClick} variant ="nav-page">
-          Browse
-        </Button>
-        <Button onClick={handleReadyToCookClick} variant="nav-page">
-          Ready to Cook
-        </Button>
-        <Button onClick={handleFavoritesClick} variant="nav-page">
-          Favorites
-        </Button>
-        <Button onClick={handleShoppingListClick} variant="nav-page">
-          Shopping List
-        </Button>
+        {isAdminRoute ? (
+          <>
+            <Button onClick={() => navigate("/admin/dashboard")} variant="nav-page">
+              Dashboard
+            </Button>
+            <Button onClick={() => navigate("/admin/review-queue")} variant="nav-page">
+              Review Queue
+            </Button>
+            <Button onClick={() => navigate("/admin/manage-users")} variant="nav-page">
+              Manage Users
+            </Button>
+            <Button onClick={() => navigate("/admin/manage-categories")} variant="nav-page">
+              Manage Categories
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button onClick={handleBrowseClick} variant ="nav-page">
+              Browse
+            </Button>
+            <Button onClick={handleReadyToCookClick} variant="nav-page">
+              Ready to Cook
+            </Button>
+            <Button onClick={handleFavoritesClick} variant="nav-page">
+              Favorites
+            </Button>
+            <Button onClick={handleShoppingListClick} variant="nav-page">
+              Shopping List
+            </Button>
+          </>
+        )}
       </div>
       
       <div className={`profile-area ${dropDown ? "open" : ""}`}>
