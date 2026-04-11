@@ -1,0 +1,334 @@
+.cooking-mode-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wireframe-controls {
+  border: 1px solid #93C5FD;
+  background-color: #F0F9FF;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wireframe-controls h4 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1E3A8A;
+}
+
+.state-btn {
+  background: white;
+  border: 1px solid #CBD5E1;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.state-btn.active {
+  background: #EFF6FF;
+  border-color: #3B82F6;
+  color: #1D4ED8;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: #E2E8F0;
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #22C55E;
+  transition: width 0.3s ease;
+}
+
+.recipe-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.recipe-header h1 {
+  font-size: 2rem;
+  color: #0F172A;
+  margin-bottom: 0.5rem;
+}
+
+.recipe-header p {
+  color: #64748B;
+}
+
+.cooking-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.current-step-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-content {
+  border: 2px solid #0F172A;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.step-number-box {
+  background-color: #0F172A;
+  color: white;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.step-meta h3 {
+  margin: 0 0 0.25rem 0;
+  color: #64748B;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.step-meta p {
+  margin: 0;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.step-instruction {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #334155;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.pro-tip {
+  border: 1px solid #3B82F6;
+  background-color: #EFF6FF;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pro-tip-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #2563EB;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.pro-tip p {
+  margin: 0;
+  color: #1D4ED8;
+}
+
+.mark-complete-btn {
+  width: 100%;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #0F172A;
+  color: #0F172A;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mark-complete-btn:hover {
+  background-color: #F8FAFC;
+}
+
+.mark-complete-btn.completed {
+  background-color: #22C55E;
+  border-color: #22C55E;
+  color: white;
+}
+
+.navigation-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.nav-btn {
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 1px solid #CBD5E1;
+  background: white;
+  color: #64748B;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: #F8FAFC;
+}
+
+.nav-btn.primary {
+  background: #0F172A;
+  border-color: #0F172A;
+  color: white;
+}
+
+.nav-btn.primary:hover:not(:disabled) {
+  background: #1E293B;
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.all-steps-panel {
+  border: 1px solid #CBD5E1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.all-steps-panel h3 {
+  margin: 0 0 1.5rem 0;
+  color: #0F172A;
+}
+
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #CBD5E1;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.step-item.active {
+  background-color: #0F172A;
+  border-color: #0F172A;
+  color: white;
+}
+
+.step-item.active .step-item-number {
+  background: white;
+  color: #0F172A;
+}
+
+.step-item.active .step-item-meta p {
+  color: #94A3B8;
+}
+
+.step-item-number {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.step-item-meta h4 {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.step-item-meta p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #64748B;
+}
+
+.exit-btn {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #EF4444;
+  color: #EF4444;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.exit-btn:hover {
+  background-color: #FEF2F2;
+}
+
+.system-behavior {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
+}
+
+.system-behavior h4 {
+  margin: 0 0 1rem 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0F172A;
+  text-transform: uppercase;
+}
+
+.system-behavior ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #475569;
+  font-size: 0.875rem;
+}
+
+.system-behavior li {
+  margin-bottom: 0.25rem;
+}

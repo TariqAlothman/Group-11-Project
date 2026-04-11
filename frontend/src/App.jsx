@@ -21,6 +21,8 @@ import ShoppingList from "./pages/user/ShoppingList.jsx";
 import CookingHistory from "./pages/user/CookingHistory.jsx";
 import ReadyToCook from "./pages/user/ReadyToCook.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import CookingMode from "./pages/user/CookingMode.jsx";
+import ProfileSettings from "./pages/user/ProfileSettings.jsx";
 
 
 //chef routes
@@ -34,10 +36,6 @@ import ReviewQueue from "./pages/admin/ReviewQueue.jsx";
 import ManageUsers from "./pages/admin/ManageUsers.jsx";
 import ManageCategories from "./pages/admin/ManageCategories.jsx";
 import "./App.css";
-
-function Home() {
-  return <h1>Home Page</h1>;
-}
 
 function App() {
   const user = { name: "Tariq" };
@@ -61,7 +59,7 @@ function App() {
       {shouldShowNavbar && <Navbar user={user} />}
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navigate to="/browse" replace />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -82,7 +80,9 @@ function App() {
         <Route path="/shopping-list" element={<ShoppingList />} />
         <Route path="/cooking-history" element={<CookingHistory />} />
         <Route path="/ready-to-cook" element={<ReadyToCook />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard user={user} />} />
+        <Route path="/cooking-mode" element={<CookingMode />} />
+        <Route path="/profile-settings" element={<ProfileSettings />} />
 
         <Route path="/chef/dashboard" element={<ChefDashboard/>}/>
         <Route path="/chef/create-recipe" element={<CreateRecipe />} />
