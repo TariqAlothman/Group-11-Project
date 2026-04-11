@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./browse.css";
 
 const cuisineTypes = [
@@ -132,6 +133,7 @@ function SearchIcon() {
 }
 
 function Browse() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [draftFilters, setDraftFilters] = useState(defaultDraftFilters);
   const [appliedFilters, setAppliedFilters] = useState(defaultDraftFilters);
@@ -202,6 +204,10 @@ function Browse() {
     if (currentPageSafe < totalPages) {
       setCurrentPage(currentPageSafe + 1);
     }
+  }
+
+  function openRecipeDetails(recipeId) {
+    navigate(`/recipe-details?recipe=${recipeId}`);
   }
 
   return (
@@ -329,7 +335,19 @@ function Browse() {
           {pageRecipes.length > 0 ? (
             <div className="browse-card-grid">
               {pageRecipes.map((recipe) => (
-                <article className="browse-card" key={recipe.id}>
+                <article
+                  className="browse-card browse-card-clickable"
+                  key={recipe.id}
+                  onClick={() => openRecipeDetails(recipe.id)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      openRecipeDetails(recipe.id);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                >
                   <div className="browse-card-image">[Recipe Image]</div>
                   <div className="browse-card-body">
                     <h3>{recipe.title}</h3>
