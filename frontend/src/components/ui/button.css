@@ -1,6 +1,6 @@
 .btn {
     padding: 8px 14px;
-    border-radius: 8px;
+    border-radius: 0;
     cursor: pointer;
     border: none;
 }
@@ -17,12 +17,15 @@
 
 .btn-nav-page{
     background-color: transparent;
-    border: 1px;
+    border: 1px solid transparent;
     color: var(--button);
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 6px 10px;
 }
 
 .btn-nav-page:hover{
-    background-color: lightblue;
-    opacity: 0.8;
+    background-color: #fff7f3;
+    border-color: #ffd4c2;
+    opacity: 1;
 }
