@@ -7,43 +7,43 @@ const favoriteRecipes = [
     id: 1,
     title: "Spaghetti Carbonara",
     cuisine: "Italian",
-    time: "30 min",
-    calories: "650 cal",
+    time: 30,
+    calories: 650,
   },
   {
     id: 2,
     title: "Chicken Teriyaki Bowl",
     cuisine: "Japanese",
-    time: "25 min",
-    calories: "480 cal",
+    time: 25,
+    calories: 480,
   },
   {
     id: 3,
     title: "Greek Salad",
     cuisine: "Mediterranean",
-    time: "15 min",
-    calories: "220 cal",
+    time: 15,
+    calories: 220,
   },
   {
     id: 4,
     title: "Beef Tacos",
     cuisine: "Mexican",
-    time: "20 min",
-    calories: "520 cal",
+    time: 20,
+    calories: 520,
   },
   {
     id: 5,
     title: "Thai Green Curry",
     cuisine: "Thai",
-    time: "35 min",
-    calories: "590 cal",
+    time: 35,
+    calories: 590,
   },
   {
-    id: 6,
+    id: 10,
     title: "Homemade Pizza",
     cuisine: "Italian",
-    time: "45 min",
-    calories: "720 cal",
+    time: 45,
+    calories: 720,
   },
 ];
 
@@ -52,7 +52,7 @@ function Favorites() {
   const [showFavorites, setShowFavorites] = useState(true);
 
   function openRecipeDetails(recipeId) {
-    navigate(`/recipe-details?recipe=${recipeId}`);
+    navigate(`/recipes/${recipeId}`);
   }
 
   return (
@@ -121,8 +121,8 @@ function Favorites() {
                   <h3>{recipe.title}</h3>
                   <div className="favorites-card-meta">
                     <span className="favorites-card-tag">{recipe.cuisine}</span>
-                    <span>{recipe.time}</span>
-                    <span>{recipe.calories}</span>
+                    <span>{recipe.time} min</span>
+                    <span>{recipe.calories} cal</span>
                   </div>
                 </div>
               </article>

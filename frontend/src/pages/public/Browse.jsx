@@ -207,7 +207,7 @@ function Browse() {
   }
 
   function openRecipeDetails(recipeId) {
-    navigate(`/recipe-details?recipe=${recipeId}`);
+    navigate(`/recipes/${recipeId}`);
   }
 
   return (

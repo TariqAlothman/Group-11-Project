@@ -1,0 +1,317 @@
+.flow-page {
+  padding: 16px 32px 40px;
+  color: #18212f;
+}
+
+.flow-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.flow-state-controls {
+  border: 1px solid #9cc5ff;
+  background: #edf5ff;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+.flow-state-controls p {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #425066;
+  text-align: left;
+}
+
+.flow-state-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.flow-state-button {
+  border: 1px solid #98a2b3;
+  background: #ffffff;
+  color: #18212f;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.flow-state-button-active {
+  border-color: #4f8ef7;
+  background: #dbeafe;
+}
+
+.flow-topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: #667085;
+}
+
+.flow-progress {
+  height: 6px;
+  border: 1px solid #98a2b3;
+  background: #edf2f7;
+  margin-bottom: 14px;
+}
+
+.flow-progress-bar {
+  height: 100%;
+  background: #22c55e;
+}
+
+.flow-header {
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.flow-header h1 {
+  margin: 0 0 4px;
+  font-size: 38px;
+  font-weight: 700;
+}
+
+.flow-header p {
+  margin: 0;
+  font-size: 13px;
+  color: #667085;
+}
+
+.flow-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 14px;
+}
+
+.flow-main-card,
+.flow-side-card,
+.flow-notes-card {
+  border: 1px solid #425066;
+  background: #ffffff;
+}
+
+.flow-main-card {
+  padding: 18px;
+}
+
+.flow-step-badge-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.flow-step-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.flow-step-meta {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+}
+
+.flow-step-meta strong {
+  font-size: 14px;
+}
+
+.flow-step-meta span {
+  font-size: 12px;
+  color: #667085;
+}
+
+.flow-step-description {
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.flow-tip-box {
+  border: 1px solid #4f8ef7;
+  background: #f5f8ff;
+  padding: 12px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.flow-tip-box strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: #4f46e5;
+}
+
+.flow-tip-box p {
+  margin: 0;
+  font-size: 12px;
+  color: #667085;
+}
+
+.flow-complete-button,
+.flow-nav-button,
+.flow-step-list-item,
+.flow-exit-button {
+  font: inherit;
+}
+
+.flow-complete-button {
+  width: 100%;
+  border: 1px solid #425066;
+  background: #ffffff;
+  color: #18212f;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.flow-nav-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.flow-nav-button {
+  border: 1px solid #c6cdd8;
+  background: #ffffff;
+  color: #475467;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.flow-nav-button-primary {
+  border-color: #0f172a;
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.flow-side-card {
+  padding: 12px;
+  align-self: start;
+}
+
+.flow-side-card h2,
+.flow-notes-card h2,
+.flow-finished-state h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.flow-step-list {
+  display: grid;
+  gap: 6px;
+}
+
+.flow-step-list-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  align-items: start;
+  border: 1px solid #98a2b3;
+  background: #ffffff;
+  color: #18212f;
+  min-height: 76px;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.flow-step-list-item-active {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.flow-step-list-item strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: inherit;
+}
+
+.flow-step-list-item span {
+  display: block;
+  font-size: 12px;
+  color: #667085;
+}
+
+.flow-step-list-item-active span {
+  color: #e5e7eb;
+}
+
+.flow-exit-button {
+  width: 100%;
+  border: 1px solid #ef4444;
+  background: #ffffff;
+  color: #ef4444;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.flow-finished-state {
+  text-align: left;
+}
+
+.flow-finished-state p {
+  margin: 0;
+  font-size: 14px;
+  color: #667085;
+}
+
+.flow-notes-card {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f8fafc;
+}
+
+.flow-notes-card h2 {
+  font-size: 12px;
+  color: #425066;
+}
+
+.flow-notes-card ul {
+  margin: 10px 0 0;
+  padding-left: 16px;
+  font-size: 12px;
+  color: #667085;
+  line-height: 1.6;
+  text-align: left;
+}
+
+@media (max-width: 980px) {
+  .flow-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .flow-page {
+    padding: 16px;
+  }
+
+  .flow-header h1 {
+    font-size: 30px;
+  }
+
+  .flow-nav-buttons {
+    grid-template-columns: 1fr;
+  }
+}

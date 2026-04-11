@@ -12,19 +12,19 @@ const initialIngredients = [
 
 const matches = [
   {
-    id: 1,
+    id: 11,
     title: "Chicken Stir Fry",
     cuisine: "Asian",
-    time: "25 min",
+    time: 25,
     matched: 4,
     total: 8,
     missing: 4,
   },
   {
-    id: 2,
+    id: 12,
     title: "Chicken Fried Rice",
     cuisine: "Asian",
-    time: "30 min",
+    time: 30,
     matched: 5,
     total: 9,
     missing: 4,
@@ -78,7 +78,7 @@ function ReadyToCook() {
   }
 
   function openRecipeDetails(recipeId) {
-    navigate(`/recipe-details?recipe=${recipeId}`);
+    navigate(`/recipes/${recipeId}`);
   }
 
   return (
@@ -228,7 +228,7 @@ function ReadyToCook() {
                           <h2>{recipe.title}</h2>
                           <div className="ready-result-meta">
                             <span className="ready-result-tag">{recipe.cuisine}</span>
-                            <span>{recipe.time}</span>
+                            <span>{recipe.time} min</span>
                           </div>
                         </div>
 

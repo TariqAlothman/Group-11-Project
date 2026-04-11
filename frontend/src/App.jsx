@@ -1,5 +1,5 @@
 import Navbar from "./components/layout/Navbar";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Navigate, Routes, Route, useLocation } from "react-router-dom";
 // authintication routes
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
@@ -14,6 +14,7 @@ import ServerError from "./pages/errors/ServerError";
 
 // users
 import Browse from "./pages/public/Browse.jsx";
+import CookingFlow from "./pages/public/CookingFlow.jsx";
 import RecipeDetails from "./pages/public/RecipeDetails.jsx";
 import Favorites from "./pages/user/Favorites.jsx";
 import ShoppingList from "./pages/user/ShoppingList.jsx";
@@ -73,7 +74,10 @@ function App() {
         <Route path="/500" element={<ServerError />} />
 
         <Route path="/browse" element={<Browse />} />
-        <Route path="/recipe-details" element={<RecipeDetails />} />
+        <Route path="/cooking-flow" element={<Navigate to="/recipes/1/cooking-flow" replace />} />
+        <Route path="/recipe-details" element={<Navigate to="/recipes/1" replace />} />
+        <Route path="/recipes/:recipeId" element={<RecipeDetails key={location.pathname} />} />
+        <Route path="/recipes/:recipeId/cooking-flow" element={<CookingFlow key={location.pathname} />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/shopping-list" element={<ShoppingList />} />
         <Route path="/cooking-history" element={<CookingHistory />} />

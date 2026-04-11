@@ -185,14 +185,14 @@ function CookingHistory() {
                     <button
                       type="button"
                       className="history-secondary-button"
-                      onClick={() => navigate(`/recipe-details?recipe=${item.id}`)}
+                      onClick={() => navigate(`/recipes/${item.id}`)}
                     >
                       View Recipe
                     </button>
                     <button
                       type="button"
                       className="history-primary-button"
-                      onClick={() => navigate(`/recipe-details?recipe=${item.id}`)}
+                      onClick={() => navigate(`/recipes/${item.id}`)}
                     >
                       Cook Again
                     </button>
