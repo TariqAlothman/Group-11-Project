@@ -24,7 +24,7 @@ function Navbar({user}) {
     console.log("Username clicked");
   }
   function handleLoginClick(){
-    console.log("Login button clicked");
+    navigate("/login");
   }
 
   function handleBrowseClick(){
@@ -61,7 +61,7 @@ function Navbar({user}) {
   }
 
   function handleLogoutClick(){
-    console.log("Logout clicked");
+    navigate("/login");
   }
 
 
