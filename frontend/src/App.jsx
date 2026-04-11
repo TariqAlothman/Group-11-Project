@@ -1,16 +1,18 @@
 import Navbar from "./components/layout/Navbar";
 import { Routes, Route, useLocation } from "react-router-dom";
-
+// authintication routes
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 
+// errors routes
 import Loading from "./pages/errors/Loading";
 import Forbidden from "./pages/errors/Forbidden";
 import NotFound from "./pages/errors/NotFound";
 import ServerError from "./pages/errors/ServerError";
 
+// users
 import Browse from "./pages/public/Browse.jsx";
 import RecipeDetails from "./pages/public/RecipeDetails.jsx";
 import Favorites from "./pages/user/Favorites.jsx";
@@ -18,9 +20,14 @@ import ShoppingList from "./pages/user/ShoppingList.jsx";
 import CookingHistory from "./pages/user/CookingHistory.jsx";
 import ReadyToCook from "./pages/user/ReadyToCook.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+
+
+//chef routes
 import ChefDashboard from "./pages/chef/ChefDashboard.jsx";
 import CreateRecipe from "./pages/chef/CreateRecipe.jsx";
 import SubmissionStatus from "./pages/chef/SubmissionStatus.jsx";
+
+//admin routes
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import ReviewQueue from "./pages/admin/ReviewQueue.jsx";
 import ManageUsers from "./pages/admin/ManageUsers.jsx";
