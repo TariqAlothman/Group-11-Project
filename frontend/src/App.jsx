@@ -12,6 +12,7 @@ import NotFound from "./pages/errors/NotFound";
 import ServerError from "./pages/errors/ServerError";
 
 import Browse from "./pages/public/Browse.jsx";
+import RecipeDetails from "./pages/public/RecipeDetails.jsx";
 import Favorites from "./pages/user/Favorites.jsx";
 import ShoppingList from "./pages/user/ShoppingList.jsx";
 import ReadyToCook from "./pages/ReadyToCook.jsx";
@@ -60,6 +61,7 @@ function App() {
         <Route path="/500" element={<ServerError />} />
 
         <Route path="/browse" element={<Browse />} />
+        <Route path="/recipe-details" element={<RecipeDetails />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/shopping-list" element={<ShoppingList />} />
         <Route path="/ready-to-cook" element={<ReadyToCook />} />
