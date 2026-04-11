@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import "./chefDashboard.css";
 
 const dashboardStats = [
   { label: "Draft Recipes", value: "3", tone: "neutral", note: "Ready for refinement" },

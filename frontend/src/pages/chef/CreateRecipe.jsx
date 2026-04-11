@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import "./chefDashboard.css";
+
 
 const validationChecklist = [
   "Recipe title",

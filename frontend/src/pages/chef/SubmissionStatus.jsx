@@ -1,3 +1,5 @@
+import "./chefDashboard.css";
+
 const submissionTabs = [
   { label: "Drafts", count: 3, tone: "accent" },
   { label: "Pending", count: 2, tone: "warning" },
