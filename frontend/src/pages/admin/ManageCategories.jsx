@@ -21,25 +21,122 @@ export default function ManageCategories() {
     { id: 5, name: 'Dessert', recipes: 123 }
   ]);
 
-  const handleAdd = (type, setState) => {
-    const name = window.prompt(`Enter new ${type} name:`);
-    if (name) {
-      setState(prev => [...prev, { id: Date.now(), name, recipes: 0 }]);
-    }
+  const [addingType, setAddingType] = useState(null);
+  const [addingValue, setAddingValue] = useState("");
+  const [editingId, setEditingId] = useState(null);
+  const [editingValue, setEditingValue] = useState("");
+  const [deletingId, setDeletingId] = useState(null);
+
+  const startAdding = (type) => {
+    setAddingType(type);
+    setAddingValue("");
   };
 
-  const handleEdit = (id, type, state, setState) => {
-    const item = state.find(i => i.id === id);
-    const name = window.prompt(`Edit ${type} name:`, item.name);
-    if (name) {
-      setState(prev => prev.map(i => i.id === id ? { ...i, name } : i));
+  const commitAdd = (type, setState) => {
+    if (addingValue.trim()) {
+      setState(prev => [...prev, { id: Date.now(), name: addingValue.trim(), recipes: 0 }]);
     }
+    setAddingType(null);
+    setAddingValue("");
   };
 
-  const handleDelete = (id, setState) => {
-    if (window.confirm('Are you sure you want to delete this category?')) {
+  const cancelAdd = () => {
+    setAddingType(null);
+    setAddingValue("");
+  };
+
+  const startEditing = (item) => {
+    setEditingId(item.id);
+    setEditingValue(item.name);
+  };
+
+  const commitEdit = (setState) => {
+    if (editingValue.trim() && editingId) {
+      setState(prev => prev.map(i => i.id === editingId ? { ...i, name: editingValue.trim() } : i));
+    }
+    setEditingId(null);
+    setEditingValue("");
+  };
+
+  const handleImmediateDelete = (id, setState) => {
+    // Two-step verification using our inline state
+    if (deletingId === id) {
       setState(prev => prev.filter(i => i.id !== id));
+      setDeletingId(null);
+    } else {
+      setDeletingId(id);
+      // Auto reset the delete confirmation after 3 seconds
+      setTimeout(() => setDeletingId(null), 3000);
     }
+  };
+
+  const renderCategoryList = (items, type, stateSetter) => {
+    return (
+      <div className="category-list">
+        {addingType === type && (
+          <div className="category-item" style={{backgroundColor: '#F8FAFC'}}>
+            <input 
+              autoFocus
+              type="text"
+              className="admin-input-inline"
+              value={addingValue}
+              onChange={(e) => setAddingValue(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && commitAdd(type, stateSetter)}
+              placeholder={`New ${type} name`}
+              style={{ flexGrow: 1, padding: '4px 8px', borderRadius: '4px', border: '1px solid #CBD5E1' }}
+            />
+            <div className="category-actions" style={{ marginLeft: '10px' }}>
+              <button className="admin-btn admin-btn-success" onClick={() => commitAdd(type, stateSetter)}>Save</button>
+              <button className="admin-btn admin-btn-outline" onClick={cancelAdd}>Cancel</button>
+            </div>
+          </div>
+        )}
+        
+        {items.map(item => (
+          <div key={item.id} className="category-item">
+            {editingId === item.id ? (
+              <>
+                <input 
+                  autoFocus
+                  type="text"
+                  className="admin-input-inline"
+                  value={editingValue}
+                  onChange={(e) => setEditingValue(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && commitEdit(stateSetter)}
+                  style={{ flexGrow: 1, padding: '4px 8px', borderRadius: '4px', border: '1px solid #3B82F6' }}
+                />
+                <div className="category-actions" style={{ marginLeft: '10px' }}>
+                  <button className="admin-btn admin-btn-success" onClick={() => commitEdit(stateSetter)}>Save</button>
+                  <button className="admin-btn admin-btn-outline" onClick={() => setEditingId(null)}>Cancel</button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="category-info">
+                  <strong>{item.name}</strong>
+                  <span>{item.recipes} recipes</span>
+                </div>
+                <div className="category-actions">
+                  <button className="admin-btn admin-btn-icon-only admin-btn-outline" onClick={() => startEditing(item)}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                  </button>
+                  <button 
+                    className={`admin-btn admin-btn-icon-only ${deletingId === item.id ? 'admin-btn-danger' : 'admin-btn-danger-outline'}`} 
+                    onClick={() => handleImmediateDelete(item.id, stateSetter)}
+                  >
+                    {deletingId === item.id ? (
+                      <span style={{ fontSize:'12px', padding:'0 2px' }}>Confirm?</span>
+                    ) : (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    )}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+    );
   };
 
 
@@ -47,7 +144,7 @@ export default function ManageCategories() {
     <div className="admin-container">
       <div className="admin-header">
         <h1>Manage Categories</h1>
-        <p>Add, edit, or remove recipe categories</p>
+        <p>Add, edit, or remove recipe categories seamlessly</p>
       </div>
 
       <div className="categories-grid">
@@ -55,56 +152,22 @@ export default function ManageCategories() {
         <div className="admin-card category-list-card">
           <div className="category-header">
             <h2>Cuisine Types</h2>
-            <button className="admin-btn admin-btn-primary" onClick={() => handleAdd('Cuisine', setCuisines)}>
+            <button className="admin-btn admin-btn-primary" onClick={() => startAdding('Cuisine')}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{marginRight: '6px'}}><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add Cuisine
             </button>
           </div>
-          <div className="category-list">
-            {cuisines.map(item => (
-              <div key={item.id} className="category-item">
-                <div className="category-info">
-                  <strong>{item.name}</strong>
-                  <span>{item.recipes} recipes</span>
-                </div>
-                <div className="category-actions">
-                  <button className="admin-btn admin-btn-icon-only admin-btn-outline" onClick={() => handleEdit(item.id, 'Cuisine', cuisines, setCuisines)}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                  </button>
-                  <button className="admin-btn admin-btn-icon-only admin-btn-danger-outline" onClick={() => handleDelete(item.id, setCuisines)}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+          {renderCategoryList(cuisines, 'Cuisine', setCuisines)}
         </div>
 
         {/* Meal Types */}
         <div className="admin-card category-list-card">
           <div className="category-header">
             <h2>Meal Types</h2>
-            <button className="admin-btn admin-btn-primary" onClick={() => handleAdd('Meal Type', setMealTypes)}>
+            <button className="admin-btn admin-btn-primary" onClick={() => startAdding('Meal Type')}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{marginRight: '6px'}}><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add Meal Type
             </button>
           </div>
-          <div className="category-list">
-            {mealTypes.map(item => (
-              <div key={item.id} className="category-item">
-                <div className="category-info">
-                  <strong>{item.name}</strong>
-                  <span>{item.recipes} recipes</span>
-                </div>
-                <div className="category-actions">
-                  <button className="admin-btn admin-btn-icon-only admin-btn-outline" onClick={() => handleEdit(item.id, 'Meal Type', mealTypes, setMealTypes)}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                  </button>
-                  <button className="admin-btn admin-btn-icon-only admin-btn-danger-outline" onClick={() => handleDelete(item.id, setMealTypes)}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+          {renderCategoryList(mealTypes, 'Meal Type', setMealTypes)}
         </div>
       </div>
 
@@ -123,13 +186,10 @@ export default function ManageCategories() {
         <h3>SYSTEM BEHAVIOR</h3>
         <ul>
           <li>Categories used for recipe classification and filtering</li>
-          <li>Add: Creates new category available immediately</li>
-          <li>Edit: Renames category across all existing recipes</li>
-          <li>Delete: Removes category, recipes marked "Uncategorized"</li>
-          <li>Recipe count shows how many recipes use each category</li>
-          <li>Categories appear in dropdown menus for chefs and filters</li>
+          <li>Add: Creates new category inline</li>
+          <li>Edit: Renames category across all existing recipes directly in the list</li>
+          <li>Delete: Double-click confirmation system replaces risky pop-ups</li>
           <li>Validation prevents empty category names</li>
-          <li>All changes logged with admin user and timestamp</li>
         </ul>
       </div>
 
