@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./chefDashboard.css";
 
@@ -33,6 +34,46 @@ const systemBehavior = [
 
 function CreateRecipe() {
   const navigate = useNavigate();
+  const [ingredients, setIngredients] = useState([
+    { id: 1, name: "", amount: "", unit: "" },
+  ]);
+  const [steps, setSteps] = useState([{ id: 1, instruction: "" }]);
+
+  function addIngredient() {
+    setIngredients((current) => [
+      ...current,
+      {
+        id: current.length + 1,
+        name: "",
+        amount: "",
+        unit: "",
+      },
+    ]);
+  }
+
+  function updateIngredient(id, field, value) {
+    setIngredients((current) =>
+      current.map((ingredient) =>
+        ingredient.id === id ? { ...ingredient, [field]: value } : ingredient
+      )
+    );
+  }
+
+  function addStep() {
+    setSteps((current) => [
+      ...current,
+      {
+        id: current.length + 1,
+        instruction: "",
+      },
+    ]);
+  }
+
+  function updateStep(id, value) {
+    setSteps((current) =>
+      current.map((step) => (step.id === id ? { ...step, instruction: value } : step))
+    );
+  }
 
   return (
     <main className="chef-page">
@@ -109,30 +150,64 @@ function CreateRecipe() {
             <article className="chef-card">
               <div className="chef-card-header">
                 <h2>Ingredients</h2>
-                <button type="button" className="chef-inline-button">
+                <button type="button" className="chef-inline-button" onClick={addIngredient}>
                   + Add Ingredient
                 </button>
               </div>
 
-              <div className="chef-dynamic-row">
-                <span className="chef-step-index">1</span>
-                <input type="text" placeholder="Ingredient name" />
-                <input type="text" placeholder="Amount" />
-                <input type="text" placeholder="Unit" />
+              <div className="chef-dynamic-list">
+                {ingredients.map((ingredient, index) => (
+                  <div className="chef-dynamic-row" key={ingredient.id}>
+                    <span className="chef-step-index">{index + 1}</span>
+                    <input
+                      type="text"
+                      placeholder="Ingredient name"
+                      value={ingredient.name}
+                      onChange={(event) =>
+                        updateIngredient(ingredient.id, "name", event.target.value)
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Amount"
+                      value={ingredient.amount}
+                      onChange={(event) =>
+                        updateIngredient(ingredient.id, "amount", event.target.value)
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Unit"
+                      value={ingredient.unit}
+                      onChange={(event) =>
+                        updateIngredient(ingredient.id, "unit", event.target.value)
+                      }
+                    />
+                  </div>
+                ))}
               </div>
             </article>
 
             <article className="chef-card">
               <div className="chef-card-header">
                 <h2>Cooking Steps</h2>
-                <button type="button" className="chef-inline-button">
+                <button type="button" className="chef-inline-button" onClick={addStep}>
                   + Add Step
                 </button>
               </div>
 
-              <div className="chef-dynamic-row chef-step-row">
-                <span className="chef-step-index">1</span>
-                <textarea rows="3" placeholder="Describe this step in detail..." />
+              <div className="chef-dynamic-list">
+                {steps.map((step, index) => (
+                  <div className="chef-dynamic-row chef-step-row" key={step.id}>
+                    <span className="chef-step-index">{index + 1}</span>
+                    <textarea
+                      rows="3"
+                      placeholder="Describe this step in detail..."
+                      value={step.instruction}
+                      onChange={(event) => updateStep(step.id, event.target.value)}
+                    />
+                  </div>
+                ))}
               </div>
             </article>
 
