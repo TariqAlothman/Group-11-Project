@@ -102,14 +102,14 @@ function DashboardIcon({ type }) {
   );
 }
 
-function Dashboard() {
+function Dashboard({ user = { name: "Tariq" } }) {
   const navigate = useNavigate();
 
   return (
     <section className="dashboard-page">
       <div className="dashboard-shell">
         <header className="dashboard-header">
-          <h1>Welcome back, John!</h1>
+          <h1>Welcome back, {user.name}!</h1>
           <p>Here's what's cooking in your kitchen</p>
         </header>
 
