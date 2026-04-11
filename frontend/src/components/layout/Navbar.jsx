@@ -48,7 +48,7 @@ function Navbar({user}) {
   }
 
   function handleProfileClick(){
-    console.log("Profile clicked");
+    navigate("/profile-settings");
   }
 
   function handleDashboardClick(){
@@ -57,7 +57,7 @@ function Navbar({user}) {
   }
 
   function handleSettingsClick(){
-    console.log("Settings clicked");
+    navigate("/profile-settings");
   }
 
   function handleLogoutClick(){

@@ -1,5 +1,5 @@
 import Navbar from "./components/layout/Navbar";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 // authintication routes
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
@@ -36,10 +36,6 @@ import ManageUsers from "./pages/admin/ManageUsers.jsx";
 import ManageCategories from "./pages/admin/ManageCategories.jsx";
 import "./App.css";
 
-function Home() {
-  return <h1>Home Page</h1>;
-}
-
 function App() {
   const user = { name: "Tariq" };
   const location = useLocation();
@@ -62,7 +58,7 @@ function App() {
       {shouldShowNavbar && <Navbar user={user} />}
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navigate to="/browse" replace />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
