@@ -16,10 +16,13 @@ import Favorites from "./pages/user/Favorites.jsx";
 import ShoppingList from "./pages/user/ShoppingList.jsx";
 import ReadyToCook from "./pages/ReadyToCook.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import CreateRecipe from "./pages/chef/CreateRecipe.jsx";
+import SubmissionStatus from "./pages/chef/SubmissionStatus.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import ReviewQueue from "./pages/admin/ReviewQueue.jsx";
 import ManageUsers from "./pages/admin/ManageUsers.jsx";
 import ManageCategories from "./pages/admin/ManageCategories.jsx";
+import "./App.css";
 
 function Home() {
   return <h1>Home Page</h1>;
@@ -64,6 +67,8 @@ function App() {
         <Route path="/shopping-list" element={<ShoppingList />} />
         <Route path="/ready-to-cook" element={<ReadyToCook />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/chef/create-recipe" element={<CreateRecipe />} />
+        <Route path="/chef/submissions" element={<SubmissionStatus />} />
 
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/review-queue" element={<ReviewQueue />} />
