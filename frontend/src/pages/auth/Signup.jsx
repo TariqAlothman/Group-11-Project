@@ -76,7 +76,7 @@ navigate("/loading", { state: { redirectTo: "/login" } });
         <button
           type="button"
           className="signup-brand-button"
-          onClick={() => navigate("/loading", { state: { redirectTo: "/" } })}          aria-label="Go to CookSmart home"
+          onClick={() => navigate("/")}          aria-label="Go to CookSmart home"
         >
           <span className="signup-brand-mark">CS</span>
           <span className="signup-brand-name">CookSmart</span>
@@ -185,7 +185,7 @@ navigate("/loading", { state: { redirectTo: "/login" } });
 
             <p className="signup-login-link-row">
               Already have an account?{" "}
-<Link to="/loading" state={{ redirectTo: "/login" }}>
+<Link to="/login">
   Login
 </Link>
             </p>

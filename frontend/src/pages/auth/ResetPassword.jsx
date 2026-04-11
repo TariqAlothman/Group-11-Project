@@ -72,7 +72,7 @@ navigate("/loading", { state: { redirectTo: "/login" } });
         <button
           type="button"
           className="reset-brand-button"
-          onClick={() => navigate("/loading", { state: { redirectTo: "/" } })}
+          onClick={() => navigate("/")}
           aria-label="Go to CookSmart home"
         >
           <span className="reset-brand-mark">CS</span>
@@ -155,7 +155,7 @@ navigate("/loading", { state: { redirectTo: "/login" } });
             </button>
 
             <p className="reset-login-link-row">
-                        <Link to="/loading" state={{ redirectTo: "/login" }}>
+                        <Link to="/login">
             Back to Login
           </Link>
             </p>

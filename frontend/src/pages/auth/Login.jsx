@@ -66,7 +66,7 @@ navigate("/loading", { state: { redirectTo: "/browse" } });
         <button
           type="button"
           className="brand-button"
-          onClick={() => navigate("/loading", { state: { redirectTo: "/" } })}
+          onClick={() => navigate("/")}
           aria-label="Go to CookSmart home"
         >
           <span className="brand-mark">CS</span>
@@ -129,7 +129,7 @@ navigate("/loading", { state: { redirectTo: "/browse" } });
             </div>
 
             <div className="support-link-row">
-              <Link to="/loading" state={{ redirectTo: "/forgot-password" }}>
+              <Link to="/forgot-password">
   Forgot Password?
 </Link>
             </div>
@@ -144,7 +144,7 @@ navigate("/loading", { state: { redirectTo: "/browse" } });
 
             <p className="signup-link-row">
                             Don&apos;t have an account?{" "}
-              <Link to="/loading" state={{ redirectTo: "/signup" }}>
+              <Link to="/signup">
                 Sign Up
               </Link>
             </p>

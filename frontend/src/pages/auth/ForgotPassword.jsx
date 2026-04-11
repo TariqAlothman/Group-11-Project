@@ -24,7 +24,7 @@ navigate("/loading", { state: { redirectTo: "/reset-password" } });
         <button
           type="button"
           className="forgot-brand-button"
-          onClick={() => navigate("/loading", { state: { redirectTo: "/" } })}
+          onClick={() => navigate("/")}
           aria-label="Go to CookSmart home"
         >
           <span className="forgot-brand-mark">CS</span>
@@ -71,7 +71,7 @@ navigate("/loading", { state: { redirectTo: "/reset-password" } });
 
             <p className="forgot-login-link-row">
                             Remember your password?{" "}
-              <Link to="/loading" state={{ redirectTo: "/login" }}>
+              <Link to="/login">
                 Back to Login
               </Link>
             </p>
