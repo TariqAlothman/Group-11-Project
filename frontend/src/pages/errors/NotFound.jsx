@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./errorPages.css";
 
-function Forbidden() {
+function NotFound() {
   const navigate = useNavigate();
 
   return (
@@ -27,10 +27,10 @@ function Forbidden() {
 
       <div className="error-content">
         <div className="error-card">
-          <h1 className="error-code">403</h1>
-          <h2 className="error-title">Access Denied</h2>
+          <h1 className="error-code">404</h1>
+          <h2 className="error-title">Page Not Found</h2>
           <p className="error-description">
-            You don&apos;t have permission to access this resource.
+            The page you&apos;re looking for doesn&apos;t exist or has been moved.
           </p>
 
           <div className="error-actions">
@@ -45,9 +45,9 @@ function Forbidden() {
             <button
               type="button"
               className="error-secondary-button"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/dashboard")}
             >
-              Login
+              Go to Dashboard
             </button>
           </div>
         </div>
@@ -56,4 +56,4 @@ function Forbidden() {
   );
 }
 
-export default Forbidden;
+export default NotFound;

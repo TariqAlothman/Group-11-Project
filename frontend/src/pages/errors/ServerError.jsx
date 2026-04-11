@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./errorPages.css";
 
-function NotFound() {
+function ServerError() {
   const navigate = useNavigate();
 
   return (
@@ -27,10 +27,10 @@ function NotFound() {
 
       <div className="error-content">
         <div className="error-card">
-          <h1 className="error-code">404</h1>
-          <h2 className="error-title">Page Not Found</h2>
+          <h1 className="error-code">500</h1>
+          <h2 className="error-title">Server Error</h2>
           <p className="error-description">
-            The page you&apos;re looking for doesn&apos;t exist or has been moved.
+            Something went wrong on our end. Please try again later.
           </p>
 
           <div className="error-actions">
@@ -45,9 +45,9 @@ function NotFound() {
             <button
               type="button"
               className="error-secondary-button"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => window.location.reload()}
             >
-              Go to Dashboard
+              Reload Page
             </button>
           </div>
         </div>
@@ -56,4 +56,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default ServerError;
