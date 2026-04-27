@@ -43,10 +43,10 @@ We have built a comprehensive set of frontend interfaces tailored to three disti
 
 ## ⚙️ Installation Instructions
 
-To run the CookSmart frontend prototype locally on your machine, follow these steps:
+To run the CookSmart application locally on your machine, follow these steps:
 
 ### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+Make sure you have [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/) installed on your machine, or access to a MongoDB Atlas cluster.
 
 ### 1. Clone the repository
 ```bash
@@ -54,39 +54,95 @@ git clone https://github.com/TariqAlothman/Group-11-Project.git
 cd Group-11-Project
 ```
 
-### 2. Navigate to the Frontend directory
-```bash
-cd frontend
-```
+### 2. Backend Setup
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Install backend dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file in the `backend/` directory with the following **Environment Variables**:
+   ```env
+   NODE_ENV=development
+   PORT=5000
+   MONGODB_URI=mongodb://localhost:27017/cooksmart  # Or your MongoDB Atlas URI
+   JWT_SECRET=supersecretkey_change_in_production
+   ```
+4. Start the backend server:
+   ```bash
+   npm run dev
+   ```
+   *The server will run on http://localhost:5000*
 
-### 3. Install Dependencies
-```bash
-npm install
-```
+### 3. Frontend Setup
+1. Open a new terminal and navigate to the frontend:
+   ```bash
+   cd frontend
+   ```
+2. Install frontend dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+   *The frontend will run on http://localhost:5173*
 
 ---
 
-## 🚀 Usage Instructions
+## 📡 API Documentation
 
-To launch the local development server and view the project:
+The backend RESTful API provides endpoints for authentication, recipes, user features, and administration. Below is the API structure.
 
-### 1. Start the Server
-```bash
-npm run dev
-```
+### Authentication Endpoints
+- **`POST /api/auth/register`** 
+  - **Body:** `{ name, email, password, role }` 
+  - **Description:** Registers a new user and returns a standard JWT token.
+- **`POST /api/auth/login`** 
+  - **Body:** `{ email, password }` 
+  - **Description:** Authenticates a user and returns a session JWT token.
+- **`GET /api/auth/profile`** 
+  - **Headers:** `Authorization: Bearer <token>`
+  - **Description:** Retrieves the profile of the currently logged-in user.
 
-### 2. View the App
-Open your web browser and navigate to:
-```text
-http://localhost:5173
-```
+### Recipe Endpoints
+- **`GET /api/recipes`** 
+  - **Description:** Get all publicly approved recipes.
+- **`GET /api/recipes/:id`** 
+  - **Description:** Get a single recipe by its ID.
+- **`POST /api/recipes`** *(Protected: Chef/Admin)*
+  - **Body:** `{ title, description, ingredients, instructions, prepTime, cookTime, category, servings }`
+  - **Description:** Creates a new recipe (starts as "Pending").
+- **`PUT /api/recipes/:id`** *(Protected: Chef/Admin)*
+  - **Description:** Updates an existing recipe.
+- **`DELETE /api/recipes/:id`** *(Protected: Chef/Admin)*
+  - **Description:** Removes a recipe from the database.
 
-### Testing the Interfaces
-Since this is a milestone frontend prototype heavily reliant on wireframes, you can explore the various routes manually. 
+### User Endpoints
+- **`GET /api/users/favorites`** *(Protected: User)*
+  - **Description:** Retrieves user's favorite recipes.
+- **`POST /api/users/favorites`** *(Protected: User)*
+  - **Body:** `{ recipeId }`
+  - **Description:** Adds a recipe to the favorites list.
+- **`GET /api/users/shopping-list`** *(Protected: User)*
+  - **Description:** Retrieves dynamic shopping list.
+- **`GET /api/users/history`** *(Protected: User)*
+  - **Description:** Retrieve user past cooked history.
 
-- The root URL (`/`) will automatically redirect you to the primary **`/browse`** page.
-- You can freely navigate to the **User Settings**, **Admin Dashboard**, and **Chef Dashboard** by clicking the **Profile icon** located in the top-right corner of the application's Navbar.
-- Look out for the **"Wireframe State Controls"** featured on specific pages (like *Cooking Mode* or *Favorites*). These buttons allow graders to quickly toggle the interface between different functional states (e.g., "In Progress" vs "Finished", or "Empty" vs "Populated").
+### Admin Endpoints
+- **`GET /api/admin/recipes/pending`** *(Protected: Admin)*
+  - **Description:** Retrieves all recipes waiting for administrator approval.
+- **`PATCH /api/admin/recipes/:id/status`** *(Protected: Admin)*
+  - **Body:** `{ status: "Approved" | "Rejected" }`
+  - **Description:** Updates the moderation status of a recipe.
+- **`GET /api/admin/users`** *(Protected: Admin)*
+  - **Description:** Lists all active users in the system.
+- **`POST /api/admin/categories`** *(Protected: Admin)*
+  - **Body:** `{ name, description }`
+  - **Description:** Creates a new food category tag.
 
 ---
 *Created for KFUPM SWE363.*
