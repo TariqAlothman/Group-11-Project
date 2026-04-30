@@ -5,7 +5,25 @@ const Recipe = require('../models/Recipe');
 // @access  Public
 const getRecipes = async (req, res, next) => {
   try {
-    const recipes = await Recipe.find({ status: 'Approved' }).populate('author', 'name').populate('category', 'name');
+    const filters = { status: 'Approved' };
+
+    if (req.query.category) {
+      filters.category = req.query.category;
+    }
+
+    if (req.query.difficulty) {
+      filters.difficulty = req.query.difficulty;
+    }
+
+    if (req.query.search) {
+      filters.title = { $regex: req.query.search.trim(), $options: 'i' };
+    }
+
+    const recipes = await Recipe.find(filters)
+      .populate('author', 'name')
+      .populate('category', 'name')
+      .sort({ createdAt: -1 });
+
     res.json(recipes);
   } catch (error) {
     next(error);
@@ -17,12 +35,18 @@ const getRecipes = async (req, res, next) => {
 // @access  Public
 const getRecipeById = async (req, res, next) => {
   try {
-    const recipe = await Recipe.findById(req.params.id).populate('author', 'name').populate('category', 'name');
+    const recipe = await Recipe.findById(req.params.id)
+      .populate('author', 'name')
+      .populate('category', 'name');
     
     if (recipe) {
+      const isAuthor =
+        req.user && recipe.author && recipe.author._id.toString() === req.user._id.toString();
+      const isPrivileged =
+        req.user && (req.user.role === 'admin' || req.user.role === 'chef');
+
       // Only return if it's approved OR user is the author OR user is admin/chef
-      if (recipe.status === 'Approved' || 
-         (req.user && (req.user.role === 'admin' || req.user.role === 'chef' || recipe.author._id.toString() === req.user._id.toString()))) {
+      if (recipe.status === 'Approved' || isAuthor || isPrivileged) {
         res.json(recipe);
       } else {
         res.status(403);
