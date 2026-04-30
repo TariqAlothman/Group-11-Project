@@ -98,21 +98,25 @@ cd Group-11-Project
 The backend RESTful API provides endpoints for authentication, recipes, user features, and administration. Below is the API structure.
 
 ### Authentication Endpoints
-- **`POST /api/auth/register`** 
-  - **Body:** `{ name, email, password, role }` 
-  - **Description:** Registers a new user and returns a standard JWT token.
+- **`POST /api/auth/register`**
+  - **Body:** `{ name, email, password }`
+  - **Description:** Registers a new standard user and returns a JWT token.
 - **`POST /api/auth/login`** 
   - **Body:** `{ email, password }` 
-  - **Description:** Authenticates a user and returns a session JWT token.
+  - **Description:** Authenticates a user and returns a JWT token.
 - **`GET /api/auth/profile`** 
   - **Headers:** `Authorization: Bearer <token>`
   - **Description:** Retrieves the profile of the currently logged-in user.
 
 ### Recipe Endpoints
 - **`GET /api/recipes`** 
-  - **Description:** Get all publicly approved recipes.
+  - **Query:** `search`, `difficulty`, `category`
+  - **Description:** Gets all publicly approved recipes, with optional filtering.
+- **`GET /api/recipes/my-recipes`** *(Protected: Chef/Admin)*
+  - **Query:** `status`
+  - **Description:** Retrieves recipes created by the logged-in chef/admin.
 - **`GET /api/recipes/:id`** 
-  - **Description:** Get a single recipe by its ID.
+  - **Description:** Gets a single recipe by ID. Pending recipes are visible only to the author, chefs, and admins.
 - **`POST /api/recipes`** *(Protected: Chef/Admin)*
   - **Body:** `{ title, description, ingredients, instructions, prepTime, cookTime, category, servings }`
   - **Description:** Creates a new recipe (starts as "Pending").
@@ -127,10 +131,25 @@ The backend RESTful API provides endpoints for authentication, recipes, user fea
 - **`POST /api/users/favorites`** *(Protected: User)*
   - **Body:** `{ recipeId }`
   - **Description:** Adds a recipe to the favorites list.
+- **`DELETE /api/users/favorites/:recipeId`** *(Protected: User)*
+  - **Description:** Removes a recipe from the favorites list.
 - **`GET /api/users/shopping-list`** *(Protected: User)*
   - **Description:** Retrieves dynamic shopping list.
+- **`POST /api/users/shopping-list`** *(Protected: User)*
+  - **Body:** `{ item, quantity }`
+  - **Description:** Adds an item to the shopping list.
+- **`PUT /api/users/shopping-list/:itemId`** *(Protected: User)*
+  - **Body:** `{ status }`
+  - **Description:** Updates a shopping list item status.
+- **`DELETE /api/users/shopping-list/:itemId`** *(Protected: User)*
+  - **Description:** Removes a shopping list item.
+- **`DELETE /api/users/shopping-list/completed`** *(Protected: User)*
+  - **Description:** Clears completed shopping list items.
 - **`GET /api/users/history`** *(Protected: User)*
   - **Description:** Retrieve user past cooked history.
+- **`POST /api/users/history`** *(Protected: User)*
+  - **Body:** `{ recipeId }`
+  - **Description:** Adds a cooked recipe to user history.
 
 ### Admin Endpoints
 - **`GET /api/admin/recipes/pending`** *(Protected: Admin)*
@@ -140,9 +159,21 @@ The backend RESTful API provides endpoints for authentication, recipes, user fea
   - **Description:** Updates the moderation status of a recipe.
 - **`GET /api/admin/users`** *(Protected: Admin)*
   - **Description:** Lists all active users in the system.
+- **`PATCH /api/admin/users/:id/role`** *(Protected: Admin)*
+  - **Body:** `{ role: "user" | "chef" | "admin" }`
+  - **Description:** Updates a user's role.
+- **`DELETE /api/admin/users/:id`** *(Protected: Admin)*
+  - **Description:** Deletes a user account.
+- **`GET /api/admin/categories`**
+  - **Description:** Lists all categories.
 - **`POST /api/admin/categories`** *(Protected: Admin)*
   - **Body:** `{ name, description }`
   - **Description:** Creates a new food category tag.
+- **`PUT /api/admin/categories/:id`** *(Protected: Admin)*
+  - **Body:** `{ name, description, image }`
+  - **Description:** Updates a food category tag.
+- **`DELETE /api/admin/categories/:id`** *(Protected: Admin)*
+  - **Description:** Deletes a category and clears it from existing recipes.
 
 ---
 *Created for KFUPM SWE363.*

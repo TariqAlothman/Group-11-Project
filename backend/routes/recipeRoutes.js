@@ -3,6 +3,7 @@ const router = express.Router();
 const { body, param, query } = require('express-validator');
 const {
   getRecipes,
+  getMyRecipes,
   getRecipeById,
   createRecipe,
   updateRecipe,
@@ -25,6 +26,20 @@ router.get(
     handleValidationErrors,
   ],
   getRecipes
+);
+
+router.get(
+  '/my-recipes',
+  protect,
+  chef,
+  [
+    query('status')
+      .optional()
+      .isIn(['Pending', 'Approved', 'Rejected'])
+      .withMessage('Status must be Pending, Approved, or Rejected'),
+    handleValidationErrors,
+  ],
+  getMyRecipes
 );
 
 // Public or private depending on status
@@ -55,7 +70,11 @@ router.post(
       .withMessage('Difficulty must be Easy, Medium, or Hard'),
     body('category').optional({ values: 'falsy' }).isMongoId().withMessage('Category must be a valid id'),
     body('ingredients').isArray({ min: 1 }).withMessage('At least one ingredient is required'),
+    body('ingredients.*.name').trim().notEmpty().withMessage('Ingredient name is required'),
+    body('ingredients.*.quantity').trim().notEmpty().withMessage('Ingredient quantity is required'),
     body('instructions').isArray({ min: 1 }).withMessage('At least one instruction is required'),
+    body('instructions.*.stepNumber').isInt({ min: 1 }).withMessage('Instruction step number must be at least 1'),
+    body('instructions.*.description').trim().notEmpty().withMessage('Instruction description is required'),
     handleValidationErrors,
   ],
   createRecipe
@@ -72,6 +91,16 @@ router.put(
       .isIn(['Easy', 'Medium', 'Hard'])
       .withMessage('Difficulty must be Easy, Medium, or Hard'),
     body('category').optional({ values: 'falsy' }).isMongoId().withMessage('Category must be a valid id'),
+    body('status')
+      .optional()
+      .isIn(['Pending', 'Approved', 'Rejected'])
+      .withMessage('Status must be Pending, Approved, or Rejected'),
+    body('ingredients').optional().isArray({ min: 1 }).withMessage('Ingredients must not be empty'),
+    body('ingredients.*.name').optional().trim().notEmpty().withMessage('Ingredient name is required'),
+    body('ingredients.*.quantity').optional().trim().notEmpty().withMessage('Ingredient quantity is required'),
+    body('instructions').optional().isArray({ min: 1 }).withMessage('Instructions must not be empty'),
+    body('instructions.*.stepNumber').optional().isInt({ min: 1 }).withMessage('Instruction step number must be at least 1'),
+    body('instructions.*.description').optional().trim().notEmpty().withMessage('Instruction description is required'),
     handleValidationErrors,
   ],
   updateRecipe

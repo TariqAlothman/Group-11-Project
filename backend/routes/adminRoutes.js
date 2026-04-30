@@ -4,10 +4,13 @@ const { body, param } = require('express-validator');
 const {
   getUsers,
   deleteUser,
+  updateUserRole,
   getPendingRecipes,
   updateRecipeStatus,
   createCategory,
-  getCategories
+  getCategories,
+  updateCategory,
+  deleteCategory
 } = require('../controllers/adminController');
 const { protect, admin } = require('../middleware/authMiddleware');
 const { handleValidationErrors } = require('../middleware/validationMiddleware');
@@ -24,6 +27,19 @@ router.delete(
     handleValidationErrors,
   ],
   deleteUser
+);
+router.patch(
+  '/users/:id/role',
+  protect,
+  admin,
+  [
+    param('id').isMongoId().withMessage('A valid user id is required'),
+    body('role')
+      .isIn(['user', 'chef', 'admin'])
+      .withMessage('Role must be user, chef, or admin'),
+    handleValidationErrors,
+  ],
+  updateUserRole
 );
 
 // Recipe Approval
@@ -55,5 +71,30 @@ router.route('/categories')
     ],
     createCategory
   );
+
+router.put(
+  '/categories/:id',
+  protect,
+  admin,
+  [
+    param('id').isMongoId().withMessage('A valid category id is required'),
+    body('name').optional().trim().notEmpty().withMessage('Category name cannot be empty'),
+    body('description').optional().trim().isLength({ max: 500 }).withMessage('Description cannot exceed 500 characters'),
+    body('image').optional().trim().notEmpty().withMessage('Image cannot be empty'),
+    handleValidationErrors,
+  ],
+  updateCategory
+);
+
+router.delete(
+  '/categories/:id',
+  protect,
+  admin,
+  [
+    param('id').isMongoId().withMessage('A valid category id is required'),
+    handleValidationErrors,
+  ],
+  deleteCategory
+);
 
 module.exports = router;

@@ -30,6 +30,28 @@ const getRecipes = async (req, res, next) => {
   }
 };
 
+// @desc    Get recipes created by the logged-in chef/admin
+// @route   GET /api/recipes/my-recipes
+// @access  Private (Chef/Admin)
+const getMyRecipes = async (req, res, next) => {
+  try {
+    const filters = { author: req.user._id };
+
+    if (req.query.status) {
+      filters.status = req.query.status;
+    }
+
+    const recipes = await Recipe.find(filters)
+      .populate('author', 'name')
+      .populate('category', 'name')
+      .sort({ createdAt: -1 });
+
+    res.json(recipes);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Get single recipe
 // @route   GET /api/recipes/:id
 // @access  Public
@@ -93,7 +115,16 @@ const updateRecipe = async (req, res, next) => {
         throw new Error('Not authorized to update this recipe');
       }
 
-      recipe = Object.assign(recipe, req.body);
+      const updates = { ...req.body };
+      delete updates.author;
+      delete updates.comments;
+      delete updates.likes;
+
+      if (req.user.role !== 'admin') {
+        delete updates.status;
+      }
+
+      recipe = Object.assign(recipe, updates);
       
       // If chef edits, it goes back to pending unless admin edits
       if (req.user.role !== 'admin') {
@@ -137,6 +168,7 @@ const deleteRecipe = async (req, res, next) => {
 
 module.exports = {
   getRecipes,
+  getMyRecipes,
   getRecipeById,
   createRecipe,
   updateRecipe,

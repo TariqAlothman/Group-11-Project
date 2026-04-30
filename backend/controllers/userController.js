@@ -8,8 +8,14 @@ const addFavorite = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     const { recipeId } = req.body;
+    const recipe = await Recipe.findOne({ _id: recipeId, status: 'Approved' });
 
-    if (!user.favorites.includes(recipeId)) {
+    if (!recipe) {
+      res.status(404);
+      throw new Error('Recipe not found');
+    }
+
+    if (!user.favorites.some((id) => id.toString() === recipeId)) {
       user.favorites.push(recipeId);
       await user.save();
     }
@@ -67,7 +73,7 @@ const addToShoppingList = async (req, res, next) => {
     const user = await User.findById(req.user._id);
     const { item, quantity } = req.body;
     
-    user.shoppingList.push({ item, quantity });
+    user.shoppingList.push({ item: item.trim(), quantity: quantity.trim() });
     await user.save();
     res.json(user.shoppingList);
   } catch (error) {
@@ -96,6 +102,41 @@ const updateShoppingListItem = async (req, res, next) => {
   }
 };
 
+// @desc    Remove shopping list item
+// @route   DELETE /api/users/shopping-list/:itemId
+// @access  Private
+const removeShoppingListItem = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const listItem = user.shoppingList.id(req.params.itemId);
+
+    if (!listItem) {
+      res.status(404);
+      throw new Error('Item not found in shopping list');
+    }
+
+    user.shoppingList.pull({ _id: req.params.itemId });
+    await user.save();
+    res.json(user.shoppingList);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Clear completed shopping list items
+// @route   DELETE /api/users/shopping-list/completed
+// @access  Private
+const clearCompletedShoppingList = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    user.shoppingList = user.shoppingList.filter((item) => !item.status);
+    await user.save();
+    res.json(user.shoppingList);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Add to cooking history
 // @route   POST /api/users/history
 // @access  Private
@@ -103,6 +144,12 @@ const addCookingHistory = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     const { recipeId } = req.body;
+    const recipe = await Recipe.findOne({ _id: recipeId, status: 'Approved' });
+
+    if (!recipe) {
+      res.status(404);
+      throw new Error('Recipe not found');
+    }
     
     user.cookingHistory.push({ recipeId });
     await user.save();
@@ -132,6 +179,8 @@ module.exports = {
   getShoppingList,
   addToShoppingList,
   updateShoppingListItem,
+  removeShoppingListItem,
+  clearCompletedShoppingList,
   addCookingHistory,
   getCookingHistory
 };

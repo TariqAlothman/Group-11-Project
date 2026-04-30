@@ -8,6 +8,8 @@ const {
   getShoppingList,
   addToShoppingList,
   updateShoppingListItem,
+  removeShoppingListItem,
+  clearCompletedShoppingList,
   addCookingHistory,
   getCookingHistory
 } = require('../controllers/userController');
@@ -47,6 +49,8 @@ router.route('/shopping-list')
     addToShoppingList
   );
 
+router.delete('/shopping-list/completed', protect, clearCompletedShoppingList);
+
 router.put(
   '/shopping-list/:itemId',
   protect,
@@ -56,6 +60,16 @@ router.put(
     handleValidationErrors,
   ],
   updateShoppingListItem
+);
+
+router.delete(
+  '/shopping-list/:itemId',
+  protect,
+  [
+    param('itemId').isMongoId().withMessage('A valid itemId is required'),
+    handleValidationErrors,
+  ],
+  removeShoppingListItem
 );
 
 router.route('/history')
