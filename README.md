@@ -107,6 +107,9 @@ The backend RESTful API provides endpoints for authentication, recipes, user fea
 - **`GET /api/auth/profile`** 
   - **Headers:** `Authorization: Bearer <token>`
   - **Description:** Retrieves the profile of the currently logged-in user.
+- **`PUT /api/auth/profile`** *(Protected)*
+  - **Body:** `{ name, email, currentPassword, password }`
+  - **Description:** Updates the current user's profile. Password changes require the current password.
 
 ### Recipe Endpoints
 - **`GET /api/recipes`** 
@@ -124,6 +127,15 @@ The backend RESTful API provides endpoints for authentication, recipes, user fea
   - **Description:** Updates an existing recipe.
 - **`DELETE /api/recipes/:id`** *(Protected: Chef/Admin)*
   - **Description:** Removes a recipe from the database.
+- **`POST /api/recipes/:id/like`** *(Protected)*
+  - **Description:** Likes an approved recipe.
+- **`DELETE /api/recipes/:id/like`** *(Protected)*
+  - **Description:** Removes the current user's like from a recipe.
+- **`POST /api/recipes/:id/comments`** *(Protected)*
+  - **Body:** `{ text }`
+  - **Description:** Adds a comment to an approved recipe.
+- **`DELETE /api/recipes/:id/comments/:commentId`** *(Protected)*
+  - **Description:** Deletes a comment owned by the current user, or any comment as admin.
 
 ### User Endpoints
 - **`GET /api/users/favorites`** *(Protected: User)*
@@ -152,6 +164,8 @@ The backend RESTful API provides endpoints for authentication, recipes, user fea
   - **Description:** Adds a cooked recipe to user history.
 
 ### Admin Endpoints
+- **`GET /api/admin/stats`** *(Protected: Admin)*
+  - **Description:** Retrieves dashboard counts for users, recipes, and categories.
 - **`GET /api/admin/recipes/pending`** *(Protected: Admin)*
   - **Description:** Retrieves all recipes waiting for administrator approval.
 - **`PATCH /api/admin/recipes/:id/status`** *(Protected: Admin)*
@@ -162,6 +176,9 @@ The backend RESTful API provides endpoints for authentication, recipes, user fea
 - **`PATCH /api/admin/users/:id/role`** *(Protected: Admin)*
   - **Body:** `{ role: "user" | "chef" | "admin" }`
   - **Description:** Updates a user's role.
+- **`PATCH /api/admin/users/:id/suspension`** *(Protected: Admin)*
+  - **Body:** `{ isSuspended: true | false }`
+  - **Description:** Suspends or unsuspends a user account.
 - **`DELETE /api/admin/users/:id`** *(Protected: Admin)*
   - **Description:** Deletes a user account.
 - **`GET /api/admin/categories`**

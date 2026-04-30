@@ -37,6 +37,7 @@ const registerUser = async (req, res, next) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        isSuspended: user.isSuspended,
         token: generateToken(user._id),
       });
     } else {
@@ -59,12 +60,18 @@ const loginUser = async (req, res, next) => {
     // Check for user email
     const user = await User.findOne({ email: normalizedEmail }).select('+password');
 
+    if (user && user.isSuspended) {
+      res.status(403);
+      throw new Error('Account suspended');
+    }
+
     if (user && (await user.matchPassword(password))) {
       res.json({
         _id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
+        isSuspended: user.isSuspended,
         token: generateToken(user._id),
       });
     } else {
@@ -89,6 +96,7 @@ const getUserProfile = async (req, res, next) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        isSuspended: user.isSuspended,
       });
     } else {
       res.status(404);
@@ -99,8 +107,70 @@ const getUserProfile = async (req, res, next) => {
   }
 };
 
+// @desc    Update user profile
+// @route   PUT /api/auth/profile
+// @access  Private
+const updateUserProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id).select('+password');
+
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+
+    if (req.body.email) {
+      const normalizedEmail = req.body.email.trim().toLowerCase();
+      const emailExists = await User.findOne({
+        email: normalizedEmail,
+        _id: { $ne: user._id },
+      });
+
+      if (emailExists) {
+        res.status(400);
+        throw new Error('Email already in use');
+      }
+
+      user.email = normalizedEmail;
+    }
+
+    if (req.body.name) {
+      user.name = req.body.name.trim();
+    }
+
+    if (req.body.password) {
+      if (!req.body.currentPassword) {
+        res.status(400);
+        throw new Error('Current password is required');
+      }
+
+      const passwordMatches = await user.matchPassword(req.body.currentPassword);
+      if (!passwordMatches) {
+        res.status(401);
+        throw new Error('Current password is incorrect');
+      }
+
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      isSuspended: updatedUser.isSuspended,
+      token: generateToken(updatedUser._id),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUserProfile,
+  updateUserProfile,
 };

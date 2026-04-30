@@ -3,7 +3,9 @@ const router = express.Router();
 const { body, param } = require('express-validator');
 const {
   getUsers,
+  getAdminStats,
   deleteUser,
+  updateUserSuspension,
   updateUserRole,
   getPendingRecipes,
   updateRecipeStatus,
@@ -14,6 +16,8 @@ const {
 } = require('../controllers/adminController');
 const { protect, admin } = require('../middleware/authMiddleware');
 const { handleValidationErrors } = require('../middleware/validationMiddleware');
+
+router.get('/stats', protect, admin, getAdminStats);
 
 // User Management
 router.route('/users')
@@ -27,6 +31,17 @@ router.delete(
     handleValidationErrors,
   ],
   deleteUser
+);
+router.patch(
+  '/users/:id/suspension',
+  protect,
+  admin,
+  [
+    param('id').isMongoId().withMessage('A valid user id is required'),
+    body('isSuspended').isBoolean().withMessage('isSuspended must be true or false'),
+    handleValidationErrors,
+  ],
+  updateUserSuspension
 );
 router.patch(
   '/users/:id/role',

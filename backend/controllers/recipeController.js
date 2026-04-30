@@ -59,7 +59,8 @@ const getRecipeById = async (req, res, next) => {
   try {
     const recipe = await Recipe.findById(req.params.id)
       .populate('author', 'name')
-      .populate('category', 'name');
+      .populate('category', 'name')
+      .populate('comments.user', 'name');
     
     if (recipe) {
       const isAuthor =
@@ -166,11 +167,137 @@ const deleteRecipe = async (req, res, next) => {
   }
 };
 
+// @desc    Like an approved recipe
+// @route   POST /api/recipes/:id/like
+// @access  Private
+const likeRecipe = async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+
+    if (!recipe) {
+      res.status(404);
+      throw new Error('Recipe not found');
+    }
+
+    if (recipe.status !== 'Approved') {
+      res.status(403);
+      throw new Error('Only approved recipes can be liked');
+    }
+
+    const alreadyLiked = recipe.likes.some(
+      (like) => like.user.toString() === req.user._id.toString()
+    );
+
+    if (!alreadyLiked) {
+      recipe.likes.push({ user: req.user._id });
+      await recipe.save();
+    }
+
+    res.json({ likes: recipe.likes.length });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Remove like from a recipe
+// @route   DELETE /api/recipes/:id/like
+// @access  Private
+const unlikeRecipe = async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+
+    if (!recipe) {
+      res.status(404);
+      throw new Error('Recipe not found');
+    }
+
+    recipe.likes = recipe.likes.filter(
+      (like) => like.user.toString() !== req.user._id.toString()
+    );
+    await recipe.save();
+
+    res.json({ likes: recipe.likes.length });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Add comment to an approved recipe
+// @route   POST /api/recipes/:id/comments
+// @access  Private
+const addRecipeComment = async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+
+    if (!recipe) {
+      res.status(404);
+      throw new Error('Recipe not found');
+    }
+
+    if (recipe.status !== 'Approved') {
+      res.status(403);
+      throw new Error('Only approved recipes can be commented on');
+    }
+
+    recipe.comments.push({
+      user: req.user._id,
+      text: req.body.text.trim(),
+    });
+
+    await recipe.save();
+    await recipe.populate('comments.user', 'name');
+
+    res.status(201).json(recipe.comments[recipe.comments.length - 1]);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Delete a recipe comment
+// @route   DELETE /api/recipes/:id/comments/:commentId
+// @access  Private
+const deleteRecipeComment = async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+
+    if (!recipe) {
+      res.status(404);
+      throw new Error('Recipe not found');
+    }
+
+    const comment = recipe.comments.id(req.params.commentId);
+
+    if (!comment) {
+      res.status(404);
+      throw new Error('Comment not found');
+    }
+
+    const isCommentOwner = comment.user.toString() === req.user._id.toString();
+    const isAdmin = req.user.role === 'admin';
+
+    if (!isCommentOwner && !isAdmin) {
+      res.status(401);
+      throw new Error('Not authorized to delete this comment');
+    }
+
+    recipe.comments.pull({ _id: req.params.commentId });
+    await recipe.save();
+
+    res.json({ message: 'Comment removed' });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getRecipes,
   getMyRecipes,
   getRecipeById,
   createRecipe,
   updateRecipe,
-  deleteRecipe
+  deleteRecipe,
+  likeRecipe,
+  unlikeRecipe,
+  addRecipeComment,
+  deleteRecipeComment
 };

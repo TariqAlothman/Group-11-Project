@@ -7,7 +7,11 @@ const {
   getRecipeById,
   createRecipe,
   updateRecipe,
-  deleteRecipe
+  deleteRecipe,
+  likeRecipe,
+  unlikeRecipe,
+  addRecipeComment,
+  deleteRecipeComment
 } = require('../controllers/recipeController');
 const { protect, chef } = require('../middleware/authMiddleware');
 const { optionalProtect } = require('../middleware/optionalAuthMiddleware');
@@ -115,6 +119,48 @@ router.delete(
     handleValidationErrors,
   ],
   deleteRecipe
+);
+
+router.post(
+  '/:id/like',
+  protect,
+  [
+    param('id').isMongoId().withMessage('A valid recipe id is required'),
+    handleValidationErrors,
+  ],
+  likeRecipe
+);
+
+router.delete(
+  '/:id/like',
+  protect,
+  [
+    param('id').isMongoId().withMessage('A valid recipe id is required'),
+    handleValidationErrors,
+  ],
+  unlikeRecipe
+);
+
+router.post(
+  '/:id/comments',
+  protect,
+  [
+    param('id').isMongoId().withMessage('A valid recipe id is required'),
+    body('text').trim().notEmpty().withMessage('Comment text is required'),
+    handleValidationErrors,
+  ],
+  addRecipeComment
+);
+
+router.delete(
+  '/:id/comments/:commentId',
+  protect,
+  [
+    param('id').isMongoId().withMessage('A valid recipe id is required'),
+    param('commentId').isMongoId().withMessage('A valid comment id is required'),
+    handleValidationErrors,
+  ],
+  deleteRecipeComment
 );
 
 module.exports = router;

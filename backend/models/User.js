@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'chef', 'admin'],
     default: 'user'
   },
+  isSuspended: {
+    type: Boolean,
+    default: false
+  },
   favorites: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Recipe'

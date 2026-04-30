@@ -14,6 +14,55 @@ const getUsers = async (req, res, next) => {
   }
 };
 
+// @desc    Get admin dashboard stats
+// @route   GET /api/admin/stats
+// @access  Private/Admin
+const getAdminStats = async (req, res, next) => {
+  try {
+    const [
+      totalUsers,
+      totalChefs,
+      totalAdmins,
+      suspendedUsers,
+      totalRecipes,
+      pendingRecipes,
+      approvedRecipes,
+      rejectedRecipes,
+      totalCategories,
+    ] = await Promise.all([
+      User.countDocuments({}),
+      User.countDocuments({ role: 'chef' }),
+      User.countDocuments({ role: 'admin' }),
+      User.countDocuments({ isSuspended: true }),
+      Recipe.countDocuments({}),
+      Recipe.countDocuments({ status: 'Pending' }),
+      Recipe.countDocuments({ status: 'Approved' }),
+      Recipe.countDocuments({ status: 'Rejected' }),
+      Category.countDocuments({}),
+    ]);
+
+    res.json({
+      users: {
+        total: totalUsers,
+        chefs: totalChefs,
+        admins: totalAdmins,
+        suspended: suspendedUsers,
+      },
+      recipes: {
+        total: totalRecipes,
+        pending: pendingRecipes,
+        approved: approvedRecipes,
+        rejected: rejectedRecipes,
+      },
+      categories: {
+        total: totalCategories,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Delete user
 // @route   DELETE /api/admin/users/:id
 // @access  Private/Admin
@@ -33,6 +82,38 @@ const deleteUser = async (req, res, next) => {
       res.status(404);
       throw new Error('User not found');
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Suspend or unsuspend a user
+// @route   PATCH /api/admin/users/:id/suspension
+// @access  Private/Admin
+const updateUserSuspension = async (req, res, next) => {
+  try {
+    if (req.params.id === req.user._id.toString()) {
+      res.status(400);
+      throw new Error('Admins cannot suspend their own account');
+    }
+
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+
+    user.isSuspended = req.body.isSuspended;
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      isSuspended: updatedUser.isSuspended,
+    });
   } catch (error) {
     next(error);
   }
@@ -64,6 +145,7 @@ const updateUserRole = async (req, res, next) => {
       name: updatedUser.name,
       email: updatedUser.email,
       role: updatedUser.role,
+      isSuspended: updatedUser.isSuspended,
     });
   } catch (error) {
     next(error);
@@ -175,7 +257,9 @@ const deleteCategory = async (req, res, next) => {
 
 module.exports = {
   getUsers,
+  getAdminStats,
   deleteUser,
+  updateUserSuspension,
   updateUserRole,
   getPendingRecipes,
   updateRecipeStatus,
