@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { body } = require('express-validator');
+const { body, param } = require('express-validator');
 const {
   registerUser,
   loginUser,
   getUserProfile,
   updateUserProfile,
+  forgotPassword,
+  resetPassword,
 } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 const { handleValidationErrors } = require('../middleware/validationMiddleware');
@@ -31,6 +33,31 @@ router.post(
     handleValidationErrors,
   ],
   loginUser
+);
+
+router.post(
+  '/forgot-password',
+  [
+    body('email').trim().isEmail().withMessage('Valid email is required'),
+    handleValidationErrors,
+  ],
+  forgotPassword
+);
+
+router.post(
+  '/reset-password/:token',
+  [
+    param('token')
+      .isLength({ min: 64, max: 64 })
+      .withMessage('A valid reset token is required')
+      .isHexadecimal()
+      .withMessage('A valid reset token is required'),
+    body('password')
+      .isLength({ min: 6 })
+      .withMessage('Password must be at least 6 characters long'),
+    handleValidationErrors,
+  ],
+  resetPassword
 );
 
 router.get('/profile', protect, getUserProfile);

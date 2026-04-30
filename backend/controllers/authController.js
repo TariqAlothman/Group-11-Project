@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 // Generate JWT Token
 const generateToken = (id) => {
@@ -168,9 +169,86 @@ const updateUserProfile = async (req, res, next) => {
   }
 };
 
+// @desc    Generate password reset token
+// @route   POST /api/auth/forgot-password
+// @access  Public
+const forgotPassword = async (req, res, next) => {
+  try {
+    const normalizedEmail = req.body.email.trim().toLowerCase();
+    const user = await User.findOne({ email: normalizedEmail });
+
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+
+    if (user.isSuspended) {
+      res.status(403);
+      throw new Error('Account suspended');
+    }
+
+    const resetToken = user.getResetPasswordToken();
+    await user.save({ validateBeforeSave: false });
+
+    res.json({
+      message: 'Password reset token generated',
+      resetToken,
+      resetUrl: `${req.protocol}://${req.get('host')}/api/auth/reset-password/${resetToken}`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Reset password using token
+// @route   POST /api/auth/reset-password/:token
+// @access  Public
+const resetPassword = async (req, res, next) => {
+  try {
+    const resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(req.params.token)
+      .digest('hex');
+
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    }).select('+resetPasswordToken +resetPasswordExpire +password');
+
+    if (!user) {
+      res.status(400);
+      throw new Error('Invalid or expired reset token');
+    }
+
+    if (user.isSuspended) {
+      res.status(403);
+      throw new Error('Account suspended');
+    }
+
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      isSuspended: updatedUser.isSuspended,
+      token: generateToken(updatedUser._id),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUserProfile,
   updateUserProfile,
+  forgotPassword,
+  resetPassword,
 };

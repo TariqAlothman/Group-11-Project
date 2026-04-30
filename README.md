@@ -104,6 +104,12 @@ The backend RESTful API provides endpoints for authentication, recipes, user fea
 - **`POST /api/auth/login`** 
   - **Body:** `{ email, password }` 
   - **Description:** Authenticates a user and returns a JWT token.
+- **`POST /api/auth/forgot-password`**
+  - **Body:** `{ email }`
+  - **Description:** Generates a password reset token. For local/class testing, the token is returned in the response.
+- **`POST /api/auth/reset-password/:token`**
+  - **Body:** `{ password }`
+  - **Description:** Resets the user's password using a valid reset token and returns a JWT token.
 - **`GET /api/auth/profile`** 
   - **Headers:** `Authorization: Bearer <token>`
   - **Description:** Retrieves the profile of the currently logged-in user.
