@@ -63,13 +63,18 @@ cd Group-11-Project
    ```bash
    npm install
    ```
-3. Create a `.env` file in the `backend/` directory with the following **Environment Variables**:
+3. Create a `.env` file in the `backend/` directory. You can copy the safe template:
+   ```bash
+   cp .env.example .env
+   ```
+   Then update the values as needed:
    ```env
    NODE_ENV=development
    PORT=5000
    MONGODB_URI=mongodb://localhost:27017/cooksmart  # Or your MongoDB Atlas URI
    JWT_SECRET=supersecretkey_change_in_production
    ```
+   `.env.example` is committed to show required variable names. Your real `.env` is ignored by Git so private database credentials and secrets are not pushed.
 4. Start the backend server:
    ```bash
    npm run dev
@@ -197,6 +202,113 @@ The backend RESTful API provides endpoints for authentication, recipes, user fea
   - **Description:** Updates a food category tag.
 - **`DELETE /api/admin/categories/:id`** *(Protected: Admin)*
   - **Description:** Deletes a category and clears it from existing recipes.
+
+### Example API Requests and Responses
+
+#### Register
+Request:
+```http
+POST /api/auth/register
+Content-Type: application/json
+```
+```json
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "123456"
+}
+```
+Successful response:
+```json
+{
+  "_id": "USER_ID",
+  "name": "Test User",
+  "email": "test@example.com",
+  "role": "user",
+  "isSuspended": false,
+  "token": "JWT_TOKEN"
+}
+```
+
+#### Create Recipe
+Request:
+```http
+POST /api/recipes
+Authorization: Bearer CHEF_OR_ADMIN_TOKEN
+Content-Type: application/json
+```
+```json
+{
+  "title": "Chicken Pasta",
+  "description": "Simple chicken pasta recipe",
+  "ingredients": [
+    { "name": "Pasta", "quantity": "200", "unit": "g" }
+  ],
+  "instructions": [
+    { "stepNumber": 1, "description": "Boil the pasta" }
+  ],
+  "prepTime": 10,
+  "cookTime": 20,
+  "servings": 2,
+  "difficulty": "Easy"
+}
+```
+Successful response:
+```json
+{
+  "_id": "RECIPE_ID",
+  "title": "Chicken Pasta",
+  "status": "Pending",
+  "author": "USER_ID"
+}
+```
+
+#### Approve Recipe
+Request:
+```http
+PATCH /api/admin/recipes/RECIPE_ID/status
+Authorization: Bearer ADMIN_TOKEN
+Content-Type: application/json
+```
+```json
+{
+  "status": "Approved"
+}
+```
+Successful response includes the updated recipe with:
+```json
+{
+  "_id": "RECIPE_ID",
+  "status": "Approved"
+}
+```
+
+#### Validation Error
+Example invalid request:
+```http
+POST /api/auth/register
+Content-Type: application/json
+```
+```json
+{
+  "name": "",
+  "email": "not-an-email",
+  "password": "123"
+}
+```
+Error response:
+```json
+{
+  "message": "Validation failed",
+  "errors": [
+    {
+      "field": "name",
+      "message": "Name is required",
+      "value": ""
+    }
+  ]
+}
+```
 
 ---
 *Created for KFUPM SWE363.*
