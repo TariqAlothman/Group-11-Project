@@ -2,13 +2,11 @@ import { useState } from "react";
 
 import "./navbar.css";
 import logo from "../../assets/icons/cooksmart-logo.png";
-import userIcon from "../../assets/icons/user-icon.svg";
-import dropDownIcon from "../../assets/icons/dropdown-icon.svg";
 import Button from "../ui/Button";
 import { useNavigate, useLocation } from "react-router-dom";
 
 
-function Navbar({user}) {
+function Navbar({user, onLogout}) {
   const [dropDown, setDropDown] = useState(false); //Profile Dropdown
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,6 +59,7 @@ function Navbar({user}) {
   }
 
   function handleLogoutClick(){
+    onLogout?.();
     navigate("/login");
   }
 

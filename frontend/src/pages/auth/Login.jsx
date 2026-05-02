@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { loginUser, saveAuthUser } from "../../utils/auth";
 import "./login.css";
 
 function EyeIcon({ open }) {
@@ -42,22 +43,40 @@ function EyeIcon({ open }) {
   );
 }
 
-function Login() {
+function Login({ onLogin }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isFormValid = useMemo(() => {
     return email.trim() && password.trim();
   }, [email, password]);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!isFormValid) return;
+    if (!isFormValid || isSubmitting) return;
 
-navigate("/loading", { state: { redirectTo: "/browse" } });
+    setError("");
+    setIsSubmitting(true);
+
+    try {
+      const user = await loginUser({
+        email: email.trim(),
+        password,
+      });
+
+      saveAuthUser(user);
+      onLogin?.(user);
+      navigate("/loading", { state: { redirectTo: "/browse" } });
+    } catch (err) {
+      setError(err.message || "Invalid email or password");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -134,12 +153,18 @@ navigate("/loading", { state: { redirectTo: "/browse" } });
 </Link>
             </div>
 
+            {error && (
+              <p className="login-error" role="alert">
+                {error}
+              </p>
+            )}
+
             <button
               type="submit"
               className="login-submit"
-              disabled={!isFormValid}
+              disabled={!isFormValid || isSubmitting}
             >
-              Login
+              {isSubmitting ? "Checking..." : "Login"}
             </button>
 
             <p className="signup-link-row">

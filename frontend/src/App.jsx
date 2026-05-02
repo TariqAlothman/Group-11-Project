@@ -1,5 +1,7 @@
+import { useState } from "react";
 import Navbar from "./components/layout/Navbar";
 import { Navigate, Routes, Route, useLocation } from "react-router-dom";
+import { clearAuthUser, getAuthUser } from "./utils/auth";
 // authintication routes
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
@@ -38,8 +40,13 @@ import ManageCategories from "./pages/admin/ManageCategories.jsx";
 import "./App.css";
 
 function App() {
-  const user = { name: "Tariq" };
+  const [user, setUser] = useState(() => getAuthUser());
   const location = useLocation();
+
+  function handleLogout() {
+    clearAuthUser();
+    setUser(null);
+  }
 
   const hideNavbarRoutes = [
     "/login",
@@ -56,12 +63,12 @@ function App() {
 
   return (
     <>
-      {shouldShowNavbar && <Navbar user={user} />}
+      {shouldShowNavbar && <Navbar user={user} onLogout={handleLogout} />}
 
       <Routes>
         <Route path="/" element={<Navigate to="/browse" replace />} />
 
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login onLogin={setUser} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
@@ -82,7 +89,7 @@ function App() {
         <Route path="/ready-to-cook" element={<ReadyToCook />} />
         <Route path="/dashboard" element={<Dashboard user={user} />} />
         <Route path="/cooking-mode" element={<CookingMode />} />
-        <Route path="/profile-settings" element={<ProfileSettings />} />
+        <Route path="/profile-settings" element={<ProfileSettings user={user} />} />
 
         <Route path="/chef/dashboard" element={<ChefDashboard/>}/>
         <Route path="/chef/create-recipe" element={<CreateRecipe />} />

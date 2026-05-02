@@ -173,6 +173,14 @@
   cursor: not-allowed;
 }
 
+.signup-error {
+  margin: 12px 0 0;
+  color: #b42318;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .signup-login-link-row {
   margin: 14px 0 0;
   color: #6b7280;

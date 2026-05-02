@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './profileSettings.css';
 
-const ProfileSettings = () => {
+const ProfileSettings = ({ user }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('personal');
 
@@ -69,12 +69,12 @@ const ProfileSettings = () => {
               
               <div className="form-group">
                 <label htmlFor="fullName">Full Name</label>
-                <input type="text" id="fullName" defaultValue="Tariq Alothman" required />
+                <input type="text" id="fullName" defaultValue={user?.name || ""} required />
               </div>
 
               <div className="form-group">
                 <label htmlFor="email">Email Address</label>
-                <input type="email" id="email" defaultValue="tariq@example.com" required />
+                <input type="email" id="email" defaultValue={user?.email || ""} required />
               </div>
 
               <div className="form-group">

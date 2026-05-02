@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../../utils/auth";
 import "./signup.css";
 
 function EyeIcon({ open }) {
@@ -51,6 +52,8 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isFormValid = useMemo(() => {
     return (
@@ -62,12 +65,26 @@ function Signup() {
     );
   }, [fullName, email, password, confirmPassword]);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!isFormValid) return;
+    if (!isFormValid || isSubmitting) return;
 
-navigate("/loading", { state: { redirectTo: "/login" } });
+    setError("");
+    setIsSubmitting(true);
+
+    try {
+      await registerUser({
+        name: fullName.trim(),
+        email: email.trim(),
+        password,
+      });
+      navigate("/loading", { state: { redirectTo: "/login" } });
+    } catch (err) {
+      setError(err.message || "Could not create account");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -178,10 +195,16 @@ navigate("/loading", { state: { redirectTo: "/login" } });
             <button
               type="submit"
               className="signup-submit"
-              disabled={!isFormValid}
+              disabled={!isFormValid || isSubmitting}
             >
-              Create Account
+              {isSubmitting ? "Creating..." : "Create Account"}
             </button>
+
+            {error && (
+              <p className="signup-error" role="alert">
+                {error}
+              </p>
+            )}
 
             <p className="signup-login-link-row">
               Already have an account?{" "}
