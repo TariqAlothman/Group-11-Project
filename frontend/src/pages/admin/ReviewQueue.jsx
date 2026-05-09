@@ -98,19 +98,7 @@ export default function ReviewQueue() {
         ))}
       </div>
 
-      <div className="admin-system-behavior">
-        <h3>SYSTEM BEHAVIOR</h3>
-        <ul>
-          <li>Pending recipes sorted by submission date (oldest first)</li>
-          <li>Admins can view full recipe details before decision</li>
-          <li>Approve: Recipe published to public catalog immediately</li>
-          <li>Reject: Reason sent to chef via email for revision</li>
-          <li>Delete: Permanent removal (use for policy violations)</li>
-          <li>All admin actions logged with timestamp and user</li>
-          <li>Chefs notified of approval/rejection via email</li>
-          <li>Rejected recipes can be edited and resubmitted</li>
-        </ul>
-      </div>
+
 
     </div>
   );

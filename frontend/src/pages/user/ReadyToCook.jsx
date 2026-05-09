@@ -86,45 +86,7 @@ function ReadyToCook() {
   return (
     <section className="ready-page">
       <div className="ready-shell">
-        <div className="ready-state-controls">
-          <p>WIREFRAME STATE CONTROLS</p>
-          <div className="ready-state-buttons">
-            <button
-              type="button"
-              className={`ready-state-button ${isEmpty ? "ready-state-button-active" : ""}`}
-              onClick={() => setStateView("empty")}
-            >
-              Empty
-            </button>
-            <button
-              type="button"
-              className={`ready-state-button ${
-                stateView === "with-ingredients" ? "ready-state-button-active" : ""
-              }`}
-              onClick={() => setStateView("with-ingredients")}
-            >
-              With Ingredients
-            </button>
-            <button
-              type="button"
-              className={`ready-state-button ${
-                noResults ? "ready-state-button-active" : ""
-              }`}
-              onClick={() => setStateView("no-results")}
-            >
-              No Results
-            </button>
-            <button
-              type="button"
-              className={`ready-state-button ${
-                saveSuccess ? "ready-state-button-active" : ""
-              }`}
-              onClick={() => setStateView("save-success")}
-            >
-              Save Success
-            </button>
-          </div>
-        </div>
+
 
         <div className="ready-layout">
           <aside className="ready-ingredients-card">
@@ -267,18 +229,7 @@ function ReadyToCook() {
           </section>
         </div>
 
-        <section className="ready-notes-card">
-          <h2>SYSTEM BEHAVIOR</h2>
-          <ul>
-            <li>Ingredient list stored in database and synced across devices</li>
-            <li>Checkbox toggles ingredient availability without removing list items</li>
-            <li>Auto-save option available after any change</li>
-            <li>Recipe matching uses only available ingredients</li>
-            <li>Save button shows success feedback notification</li>
-            <li>Ingredients can be marked unavailable without deletion</li>
-            <li>Missing ingredients automatically added to shopping list option</li>
-          </ul>
-        </section>
+
       </div>
     </section>
   );

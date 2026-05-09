@@ -37,30 +37,7 @@ const CookingMode = () => {
 
   return (
     <div className="cooking-mode-container">
-      {/* Wireframe Controls */}
-      <div className="wireframe-controls">
-        <h4>WIREFRAME STATE CONTROLS</h4>
-        <button 
-          className={`state-btn ${wireframeState === "In Progress" ? "active" : ""}`}
-          onClick={() => {
-            setWireframeState("In Progress");
-            setCompletedSteps([1]);
-            setCurrentStep(1);
-          }}
-        >
-          In Progress
-        </button>
-        <button 
-          className={`state-btn ${wireframeState === "Finished" ? "active" : ""}`}
-          onClick={() => {
-            setWireframeState("Finished");
-            setCompletedSteps(steps.map(s => s.id));
-            setCurrentStep(6);
-          }}
-        >
-          Finished
-        </button>
-      </div>
+
 
       <div className="progress-header">
         <span>Step {currentStep} of {steps.length}</span>
@@ -171,19 +148,7 @@ const CookingMode = () => {
         </div>
       </div>
 
-      <div className="system-behavior">
-        <h4>SYSTEM BEHAVIOR</h4>
-        <ul>
-          <li>Cooking session tracked in real-time</li>
-          <li>Progress saved automatically (can resume later)</li>
-          <li>Step completion marked with visual feedback</li>
-          <li>Navigation allows jumping to any step</li>
-          <li>Finish button appears on final step</li>
-          <li>Completion modal confirms recipe added to history</li>
-          <li>User stats updated (completed recipes count, streak)</li>
-          <li>Exit button allows leaving without completing</li>
-        </ul>
-      </div>
+
     </div>
   );
 };

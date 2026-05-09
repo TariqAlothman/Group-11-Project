@@ -245,14 +245,7 @@ function CookingHistory() {
           </aside>
         </div>
 
-        <section className="history-notes-card">
-          <h2>SYSTEM BEHAVIOR</h2>
-          <ul>
-            {systemBehavior.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
+
       </div>
     </section>
   );

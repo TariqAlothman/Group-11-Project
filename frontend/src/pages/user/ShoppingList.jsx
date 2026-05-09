@@ -99,36 +99,7 @@ function ShoppingList() {
   return (
     <section className="shopping-page">
       <div className="shopping-shell">
-        <div className="shopping-state-controls">
-          <p>WIREFRAME STATE CONTROLS</p>
-          <div className="shopping-state-buttons">
-            <button
-              type="button"
-              className={`shopping-state-button ${
-                stateView === "with-items" ? "shopping-state-button-active" : ""
-              }`}
-              onClick={() => setStateView("with-items")}
-            >
-              With Items
-            </button>
-            <button
-              type="button"
-              className={`shopping-state-button ${isEmpty ? "shopping-state-button-active" : ""}`}
-              onClick={() => setStateView("empty")}
-            >
-              Empty
-            </button>
-            <button
-              type="button"
-              className={`shopping-state-button ${
-                generationSuccess ? "shopping-state-button-active" : ""
-              }`}
-              onClick={() => setStateView("generation-success")}
-            >
-              Generation Success
-            </button>
-          </div>
-        </div>
+
 
         <header className="shopping-header">
           <div>
@@ -261,18 +232,7 @@ function ShoppingList() {
           </aside>
         </div>
 
-        <section className="shopping-notes-card">
-          <h2>SYSTEM BEHAVIOR</h2>
-          <ul>
-            <li>Shopping list synced across devices in real-time</li>
-            <li>Items grouped by source from recipes vs. custom</li>
-            <li>Generate Shopping List from recipe detail page adds missing ingredients</li>
-            <li>Checkbox marks items as purchased without feedback</li>
-            <li>Clear Completed removes all checked items at once</li>
-            <li>Custom items can be added manually with optional amounts</li>
-            <li>Recipe source shown for auto-generated items</li>
-          </ul>
-        </section>
+
       </div>
     </section>
   );

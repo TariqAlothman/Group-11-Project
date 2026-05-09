@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { resetPasswordAPI } from "../../utils/auth";
 import "./resetPassword.css";
 
 function EyeIcon({ open }) {
@@ -44,26 +45,50 @@ function EyeIcon({ open }) {
 
 function ResetPassword() {
   const navigate = useNavigate();
+  const { token } = useParams();
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+  
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const isFormValid = useMemo(() => {
     return (
       newPassword.trim() &&
       confirmNewPassword.trim() &&
-      newPassword === confirmNewPassword
+      newPassword === confirmNewPassword &&
+      newPassword.length >= 6
     );
   }, [newPassword, confirmNewPassword]);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!isFormValid) return;
+    if (!isFormValid || isSubmitting) return;
 
-navigate("/loading", { state: { redirectTo: "/login" } });
+    if (!token) {
+      setError("No reset token found. Please request a new link.");
+      return;
+    }
+
+    setError("");
+    setIsSubmitting(true);
+
+    try {
+      await resetPasswordAPI(token, newPassword);
+      setSuccess(true);
+      setTimeout(() => {
+        navigate("/loading", { state: { redirectTo: "/login" } });
+      }, 1500);
+    } catch (err) {
+      setError(err.message || "Failed to reset password");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -146,12 +171,24 @@ navigate("/loading", { state: { redirectTo: "/login" } });
               </button>
             </div>
 
+            {success ? (
+              <p className="reset-success" style={{ color: "var(--admin-success)", marginBottom: "1rem" }}>
+                Password reset successfully! Redirecting...
+              </p>
+            ) : null}
+
+            {error && (
+              <p className="reset-error" role="alert" style={{ color: "var(--admin-danger)", marginBottom: "1rem" }}>
+                {error}
+              </p>
+            )}
+
             <button
               type="submit"
               className="reset-submit"
-              disabled={!isFormValid}
+              disabled={!isFormValid || isSubmitting}
             >
-              Reset Password
+              {isSubmitting ? "Resetting..." : "Reset Password"}
             </button>
 
             <p className="reset-login-link-row">

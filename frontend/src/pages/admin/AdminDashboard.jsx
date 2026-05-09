@@ -191,20 +191,7 @@ export default function AdminDashboard() {
         </div>
       </div>
       
-      {/* System Behavior */}
-      <div className="admin-system-behavior">
-        <h3>SYSTEM BEHAVIOR</h3>
-        <ul>
-          <li>Admin dashboard provides platform overview</li>
-          <li>Real-time statistics updated automatically</li>
-          <li>Quick access to key moderation tasks</li>
-          <li>Pending reviews require immediate attention</li>
-          <li>Activity log tracks all admin actions</li>
-          <li>Popular recipes help identify trending content</li>
-          <li>System status monitoring for platform health</li>
-          <li>Role-based access: Admin-only view</li>
-        </ul>
-      </div>
+
 
     </div>
   );

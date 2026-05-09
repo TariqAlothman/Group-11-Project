@@ -29,6 +29,14 @@ export function registerUser(userDetails) {
   return requestAuth("/api/auth/register", userDetails);
 }
 
+export function forgotPasswordAPI(email) {
+  return requestAuth("/api/auth/forgot-password", { email });
+}
+
+export function resetPasswordAPI(token, password) {
+  return requestAuth(`/api/auth/reset-password/${token}`, { password });
+}
+
 export function saveAuthUser(user) {
   localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
 }

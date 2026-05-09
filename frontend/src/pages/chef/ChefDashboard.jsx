@@ -231,14 +231,7 @@ function ChefDashboard() {
           </aside>
         </section>
 
-        <section className="chef-card chef-system-note">
-          <h2>System Behavior</h2>
-          <ul className="chef-mini-list">
-            {systemBehavior.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
+
       </section>
     </main>
   );

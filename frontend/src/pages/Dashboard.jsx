@@ -197,14 +197,7 @@ function Dashboard({ user }) {
           </aside>
         </div>
 
-        <section className="dashboard-notes-card">
-          <h2>SYSTEM BEHAVIOR</h2>
-          <ul>
-            {systemBehavior.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
+
       </div>
     </section>
   );

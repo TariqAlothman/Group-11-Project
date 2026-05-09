@@ -71,7 +71,15 @@ function Login({ onLogin }) {
 
       saveAuthUser(user);
       onLogin?.(user);
-      navigate("/loading", { state: { redirectTo: "/browse" } });
+      
+      let redirectTo = "/browse";
+      if (user.role === "admin") {
+        redirectTo = "/admin/dashboard";
+      } else if (user.role === "chef") {
+        redirectTo = "/chef/dashboard";
+      }
+      
+      navigate("/loading", { state: { redirectTo } });
     } catch (err) {
       setError(err.message || "Invalid email or password");
     } finally {

@@ -182,16 +182,7 @@ export default function ManageCategories() {
         </ul>
       </div>
 
-      <div className="admin-system-behavior">
-        <h3>SYSTEM BEHAVIOR</h3>
-        <ul>
-          <li>Categories used for recipe classification and filtering</li>
-          <li>Add: Creates new category inline</li>
-          <li>Edit: Renames category across all existing recipes directly in the list</li>
-          <li>Delete: Double-click confirmation system replaces risky pop-ups</li>
-          <li>Validation prevents empty category names</li>
-        </ul>
-      </div>
+
 
     </div>
   );

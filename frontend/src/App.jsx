@@ -67,11 +67,14 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Navigate to="/browse" replace />} />
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="/chef" element={<Navigate to="/chef/dashboard" replace />} />
 
         <Route path="/login" element={<Login onLogin={setUser} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         <Route path="/loading" element={<Loading />} />
         <Route path="/403" element={<Forbidden />} />

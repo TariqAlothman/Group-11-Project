@@ -167,19 +167,7 @@ export default function ManageUsers() {
         </table>
       </div>
 
-      <div className="admin-system-behavior">
-        <h3>SYSTEM BEHAVIOR</h3>
-        <ul>
-          <li>Search filters users by name or email in real-time</li>
-          <li>Suspend: User logged out and access revoked immediately</li>
-          <li>Unsuspend: User regains full platform access</li>
-          <li>Delete: Permanent removal of user and all associated data</li>
-          <li>All actions logged with admin user and timestamp</li>
-          <li>Email notification sent to suspended users</li>
-          <li>Role badges identify User, Chef, and Admin accounts</li>
-          <li>Chefs' published recipes remain live after suspension</li>
-        </ul>
-      </div>
+
     </div>
   );
 }

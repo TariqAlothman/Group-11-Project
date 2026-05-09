@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./chefDashboard.css";
 
@@ -38,6 +38,8 @@ function CreateRecipe() {
     { id: 1, name: "", amount: "", unit: "" },
   ]);
   const [steps, setSteps] = useState([{ id: 1, instruction: "" }]);
+  const fileInputRef = useRef(null);
+  const [imageName, setImageName] = useState("");
 
   function addIngredient() {
     setIngredients((current) => [
@@ -132,17 +134,17 @@ function CreateRecipe() {
 
                 <label className="chef-field">
                   <span>Cooking Time (mins) *</span>
-                  <input type="text" placeholder="30" />
+                  <input type="number" min="1" placeholder="30" />
                 </label>
 
                 <label className="chef-field">
                   <span>Servings *</span>
-                  <input type="text" placeholder="4" />
+                  <input type="number" min="1" placeholder="4" />
                 </label>
 
                 <label className="chef-field">
                   <span>Calories (per serving)</span>
-                  <input type="text" placeholder="450" />
+                  <input type="number" min="0" placeholder="450" />
                 </label>
               </div>
             </article>
@@ -216,13 +218,28 @@ function CreateRecipe() {
                 <h2>Recipe Image</h2>
               </div>
 
-              <div className="chef-upload-box">
+              <div className="chef-upload-box" onClick={() => fileInputRef.current.click()} style={{ cursor: "pointer" }}>
+                <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  style={{ display: "none" }} 
+                  accept="image/png, image/jpeg, image/svg+xml, image/webp"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      setImageName(e.target.files[0].name);
+                    }
+                  }}
+                />
                 <div className="chef-upload-icon">↑</div>
                 <strong>Drag &amp; drop or click to upload</strong>
                 <span>PNG, JPG, SVG, or WebP. Recommended: 1200 x 800.</span>
-                <button type="button" className="chef-inline-button">
-                  Choose File
-                </button>
+                {imageName ? (
+                  <p style={{ marginTop: "10px", color: "var(--admin-success)", fontWeight: "bold" }}>Selected: {imageName}</p>
+                ) : (
+                  <button type="button" className="chef-inline-button" onClick={(e) => { e.stopPropagation(); fileInputRef.current.click(); }}>
+                    Choose File
+                  </button>
+                )}
               </div>
             </article>
           </div>
@@ -248,14 +265,7 @@ function CreateRecipe() {
           </aside>
         </section>
 
-        <section className="chef-card chef-system-note">
-          <h2>System Behavior</h2>
-          <ul className="chef-mini-list">
-            {systemBehavior.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
+
       </section>
     </main>
   );

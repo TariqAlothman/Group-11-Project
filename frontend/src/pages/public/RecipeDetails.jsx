@@ -258,38 +258,7 @@ function RecipeDetails() {
   return (
     <section className="recipe-details-page">
       <div className="recipe-details-shell">
-        <div className="recipe-state-controls">
-          <p>WIREFRAME STATE CONTROLS</p>
-          <div className="recipe-state-button-row">
-            <button
-              type="button"
-              className={`recipe-state-button ${
-                stateView === "guest" ? "recipe-state-button-active" : ""
-              }`}
-              onClick={() => setStateView("guest")}
-            >
-              Guest View
-            </button>
-            <button
-              type="button"
-              className={`recipe-state-button ${
-                stateView === "logged-in" ? "recipe-state-button-active" : ""
-              }`}
-              onClick={() => setStateView("logged-in")}
-            >
-              Logged In
-            </button>
-            <button
-              type="button"
-              className={`recipe-state-button ${
-                stateView === "missing" ? "recipe-state-button-active" : ""
-              }`}
-              onClick={() => setStateView("missing")}
-            >
-              Missing Ingredients
-            </button>
-          </div>
-        </div>
+
 
         <div className="recipe-top-layout">
           <div className="recipe-main-column">
@@ -383,18 +352,7 @@ function RecipeDetails() {
           </aside>
         </div>
 
-        <section className="recipe-notes-card">
-          <h2>SYSTEM BEHAVIOR</h2>
-          <ul>
-            <li>Recipe data fetched from API using recipe ID from URL</li>
-            <li>Guest users see login prompt when clicking "Add to Favorites"</li>
-            <li>Instructions and ingredients rendered from recipe model</li>
-            <li>Start Cooking redirects to step-by-step cooking mode</li>
-            <li>Generate Shopping List adds missing ingredients to user's list</li>
-            <li>Ingredient checkboxes for manual tracking later saved in session</li>
-            <li>Missing ingredients highlighted when coming from Ready-to-Cook mode</li>
-          </ul>
-        </section>
+
       </div>
     </section>
   );

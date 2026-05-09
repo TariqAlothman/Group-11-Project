@@ -173,27 +173,7 @@ function CookingFlow() {
   return (
     <section className="flow-page">
       <div className="flow-shell">
-        <div className="flow-state-controls">
-          <p>WIREFRAME STATE CONTROLS</p>
-          <div className="flow-state-buttons">
-            <button
-              type="button"
-              className={`flow-state-button ${
-                !isFinished ? "flow-state-button-active" : ""
-              }`}
-              onClick={() => setStateView("in-progress")}
-            >
-              In Progress
-            </button>
-            <button
-              type="button"
-              className={`flow-state-button ${isFinished ? "flow-state-button-active" : ""}`}
-              onClick={() => setStateView("finished")}
-            >
-              Finished
-            </button>
-          </div>
-        </div>
+
 
         <div className="flow-topbar">
           <span>
@@ -283,14 +263,7 @@ function CookingFlow() {
           </aside>
         </div>
 
-        <section className="flow-notes-card">
-          <h2>SYSTEM BEHAVIOR</h2>
-          <ul>
-            {systemBehavior.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
+
       </div>
     </section>
   );

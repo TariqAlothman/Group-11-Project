@@ -64,29 +64,7 @@ function Favorites() {
   return (
     <section className="favorites-page">
       <div className="favorites-shell">
-        <div className="favorites-state-controls">
-          <p>WIREFRAME STATE CONTROLS</p>
-          <div className="favorites-state-buttons">
-            <button
-              type="button"
-              className={`favorites-state-button ${
-                showFavorites ? "favorites-state-button-active" : ""
-              }`}
-              onClick={() => setShowFavorites(true)}
-            >
-              With Favorites
-            </button>
-            <button
-              type="button"
-              className={`favorites-state-button ${
-                !showFavorites ? "favorites-state-button-active" : ""
-              }`}
-              onClick={() => setShowFavorites(false)}
-            >
-              Empty
-            </button>
-          </div>
-        </div>
+
 
         <header className="favorites-header">
           <h1>My Favorites</h1>
@@ -143,18 +121,7 @@ function Favorites() {
           </div>
         )}
 
-        <section className="favorites-notes">
-          <h2>SYSTEM BEHAVIOR</h2>
-          <ul>
-            <li>Favorites fetched from database on page load</li>
-            <li>Remove button appears on hover for each recipe card</li>
-            <li>Confirmation modal prevents accidental removal</li>
-            <li>Favorites synced across all user devices</li>
-            <li>Empty state encourages browsing recipes</li>
-            <li>Grid layout adapts for all devices</li>
-            <li>Heart icon indicates saved status</li>
-          </ul>
-        </section>
+
       </div>
     </section>
   );
