@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { getAuthUser } from "../../utils/auth";
 import "./recipeDetails.css";
 
 const recipeDetailsMap = {
@@ -248,11 +249,10 @@ function InfoIcon({ type }) {
 function RecipeDetails() {
   const navigate = useNavigate();
   const { recipeId } = useParams();
-  const [stateView, setStateView] = useState("guest");
   const recipe = recipeDetailsMap[recipeId] ?? recipeDetailsMap[1];
 
-  const missingIngredients = stateView === "missing";
-  const isLoggedIn = stateView === "logged-in" || stateView === "missing";
+  const missingIngredients = false;
+  const isLoggedIn = !!getAuthUser();
   const availableIngredientName = recipe.ingredients[recipe.ingredients.length - 1]?.name;
 
   return (
