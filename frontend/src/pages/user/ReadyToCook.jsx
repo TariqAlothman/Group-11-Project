@@ -19,6 +19,7 @@ const matches = [
     matched: 4,
     total: 8,
     missing: 4,
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&h=200&fit=crop",
   },
   {
     id: 12,
@@ -28,6 +29,7 @@ const matches = [
     matched: 5,
     total: 9,
     missing: 4,
+    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300&h=200&fit=crop",
   },
 ];
 
@@ -222,7 +224,9 @@ function ReadyToCook() {
                       role="button"
                       tabIndex={0}
                     >
-                      <div className="ready-result-image">[Image]</div>
+                      <div className="ready-result-image">
+                        <img src={recipe.image} alt={recipe.title} />
+                      </div>
                       <div className="ready-result-content">
                         <div className="ready-result-heading">
                           <h2>{recipe.title}</h2>

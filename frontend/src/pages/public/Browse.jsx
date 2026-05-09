@@ -21,6 +21,7 @@ const recipes = [
     mealType: "Dinner",
     time: 30,
     calories: 650,
+    image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400&h=300&fit=crop",
   },
   {
     id: 2,
@@ -29,6 +30,7 @@ const recipes = [
     mealType: "Lunch",
     time: 25,
     calories: 480,
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
   },
   {
     id: 3,
@@ -37,6 +39,7 @@ const recipes = [
     mealType: "Lunch",
     time: 15,
     calories: 220,
+    image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop",
   },
   {
     id: 4,
@@ -45,6 +48,7 @@ const recipes = [
     mealType: "Dinner",
     time: 20,
     calories: 520,
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
   },
   {
     id: 5,
@@ -53,6 +57,7 @@ const recipes = [
     mealType: "Dinner",
     time: 35,
     calories: 580,
+    image: "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=400&h=300&fit=crop",
   },
   {
     id: 6,
@@ -61,6 +66,7 @@ const recipes = [
     mealType: "Lunch",
     time: 10,
     calories: 320,
+    image: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=400&h=300&fit=crop",
   },
   {
     id: 7,
@@ -69,6 +75,7 @@ const recipes = [
     mealType: "Breakfast",
     time: 18,
     calories: 410,
+    image: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=300&fit=crop",
   },
   {
     id: 8,
@@ -77,6 +84,7 @@ const recipes = [
     mealType: "Dinner",
     time: 40,
     calories: 360,
+    image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400&h=300&fit=crop",
   },
   {
     id: 9,
@@ -85,6 +93,7 @@ const recipes = [
     mealType: "Snack",
     time: 12,
     calories: 190,
+    image: "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=400&h=300&fit=crop",
   },
 ];
 
@@ -348,7 +357,9 @@ function Browse() {
                   role="button"
                   tabIndex={0}
                 >
-                  <div className="browse-card-image">[Recipe Image]</div>
+                  <div className="browse-card-image">
+                    <img src={recipe.image} alt={recipe.title} />
+                  </div>
                   <div className="browse-card-body">
                     <h3>{recipe.title}</h3>
                     <div className="browse-card-meta">

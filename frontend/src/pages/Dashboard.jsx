@@ -36,14 +36,14 @@ const quickActions = [
 ];
 
 const recommendations = [
-  { title: "Homemade Pizza", meta: "45 min | Italian" },
-  { title: "Pad Thai", meta: "30 min | Thai" },
+  { title: "Homemade Pizza", meta: "45 min | Italian", image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&h=200&fit=crop" },
+  { title: "Pad Thai", meta: "30 min | Thai", image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=300&h=200&fit=crop" },
 ];
 
 const recentActivity = [
-  { title: "Spaghetti Carbonara", when: "2 days ago" },
-  { title: "Chicken Teriyaki", when: "5 days ago" },
-  { title: "Greek Salad", when: "1 week ago" },
+  { title: "Spaghetti Carbonara", when: "2 days ago", image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=100&h=100&fit=crop" },
+  { title: "Chicken Teriyaki", when: "5 days ago", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop" },
+  { title: "Greek Salad", when: "1 week ago", image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=100&h=100&fit=crop" },
 ];
 
 const systemBehavior = [
@@ -155,7 +155,7 @@ function Dashboard({ user }) {
                 {recentActivity.map((item) => (
                   <div className="dashboard-activity-row" key={item.title}>
                     <div className="dashboard-activity-main">
-                      <div className="dashboard-activity-image" />
+                      <img className="dashboard-activity-image" src={item.image} alt={item.title} />
                       <div>
                         <h3>{item.title}</h3>
                         <p>{item.when}</p>
@@ -180,7 +180,7 @@ function Dashboard({ user }) {
                 <p className="dashboard-recommend-label">Popular This Week</p>
                 {recommendations.map((recipe) => (
                   <article className="dashboard-recipe-card" key={recipe.title}>
-                    <div className="dashboard-recipe-image" />
+                    <img className="dashboard-recipe-image" src={recipe.image} alt={recipe.title} />
                     <h3>{recipe.title}</h3>
                     <p>{recipe.meta}</p>
                   </article>

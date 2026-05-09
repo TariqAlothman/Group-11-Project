@@ -9,6 +9,7 @@ const favoriteRecipes = [
     cuisine: "Italian",
     time: 30,
     calories: 650,
+    image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400&h=300&fit=crop",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ const favoriteRecipes = [
     cuisine: "Japanese",
     time: 25,
     calories: 480,
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
   },
   {
     id: 3,
@@ -23,6 +25,7 @@ const favoriteRecipes = [
     cuisine: "Mediterranean",
     time: 15,
     calories: 220,
+    image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=300&fit=crop",
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ const favoriteRecipes = [
     cuisine: "Mexican",
     time: 20,
     calories: 520,
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
   },
   {
     id: 5,
@@ -37,6 +41,7 @@ const favoriteRecipes = [
     cuisine: "Thai",
     time: 35,
     calories: 590,
+    image: "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=400&h=300&fit=crop",
   },
   {
     id: 10,
@@ -44,6 +49,7 @@ const favoriteRecipes = [
     cuisine: "Italian",
     time: 45,
     calories: 720,
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop",
   },
 ];
 
@@ -116,7 +122,9 @@ function Favorites() {
                     <path d="M12 21.35 10.55 20C5.4 15.24 2 12.09 2 8.25 2 5.1 4.42 2.75 7.5 2.75c1.74 0 3.41.81 4.5 2.09 1.09-1.28 2.76-2.09 4.5-2.09 3.08 0 5.5 2.35 5.5 5.5 0 3.84-3.4 6.99-8.55 11.76L12 21.35Z" />
                   </svg>
                 </button>
-                <div className="favorites-card-image">[Recipe Image]</div>
+                <div className="favorites-card-image">
+                  <img src={recipe.image} alt={recipe.title} />
+                </div>
                 <div className="favorites-card-body">
                   <h3>{recipe.title}</h3>
                   <div className="favorites-card-meta">

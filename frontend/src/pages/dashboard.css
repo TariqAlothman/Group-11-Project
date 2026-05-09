@@ -165,11 +165,13 @@
 }
 
 .dashboard-activity-image {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border: 1px solid #7b8794;
   background: #d4dae3;
   flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 .dashboard-activity-main h3 {
@@ -228,10 +230,14 @@
 }
 
 .dashboard-recipe-image {
-  height: 46px;
+  width: 100%;
+  height: 80px;
   border: 1px solid #98a2b3;
   background: #d4dae3;
   margin-bottom: 6px;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
 }
 
 .dashboard-recipe-card h3 {

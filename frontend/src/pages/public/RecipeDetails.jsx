@@ -10,6 +10,7 @@ const recipeDetailsMap = {
     time: 30,
     calories: 650,
     servings: 4,
+    image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&h=500&fit=crop",
     difficulty: "Medium",
     ingredients: [
       { name: "Spaghetti", amount: "400g" },
@@ -35,6 +36,7 @@ const recipeDetailsMap = {
     time: 25,
     calories: 480,
     servings: 2,
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=500&fit=crop",
     difficulty: "Easy",
     ingredients: [
       { name: "Chicken breast", amount: "300g" },
@@ -57,6 +59,7 @@ const recipeDetailsMap = {
     time: 15,
     calories: 220,
     servings: 2,
+    image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800&h=500&fit=crop",
     difficulty: "Easy",
     ingredients: [
       { name: "Cucumber", amount: "1 large" },
@@ -79,6 +82,7 @@ const recipeDetailsMap = {
     time: 20,
     calories: 520,
     servings: 3,
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&h=500&fit=crop",
     difficulty: "Easy",
     ingredients: [
       { name: "Ground beef", amount: "400g" },
@@ -101,6 +105,7 @@ const recipeDetailsMap = {
     time: 35,
     calories: 580,
     servings: 4,
+    image: "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=800&h=500&fit=crop",
     difficulty: "Medium",
     ingredients: [
       { name: "Green curry paste", amount: "3 tbsp" },
@@ -123,6 +128,7 @@ const recipeDetailsMap = {
     time: 45,
     calories: 720,
     servings: 4,
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&h=500&fit=crop",
     difficulty: "Medium",
     ingredients: [
       { name: "Pizza dough", amount: "1 ball" },
@@ -144,6 +150,7 @@ const recipeDetailsMap = {
     time: 25,
     calories: 430,
     servings: 4,
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&h=500&fit=crop",
     difficulty: "Easy",
     ingredients: [
       { name: "Chicken breast", amount: "400g" },
@@ -166,6 +173,7 @@ const recipeDetailsMap = {
     time: 30,
     calories: 500,
     servings: 4,
+    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800&h=500&fit=crop",
     difficulty: "Easy",
     ingredients: [
       { name: "Chicken breast", amount: "300g" },
@@ -286,7 +294,7 @@ function RecipeDetails() {
         <div className="recipe-top-layout">
           <div className="recipe-main-column">
             <div className="recipe-image-panel">
-              <span>{`[Recipe Image: ${recipe.title}]`}</span>
+              <img src={recipe.image} alt={recipe.title} />
             </div>
 
             <header className="recipe-header">
