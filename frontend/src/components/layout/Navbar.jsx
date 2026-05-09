@@ -130,9 +130,15 @@ function Navbar({user, onLogout}) {
             {dropDown && (    // checks if the dropdown is open then show the dropdown
               <div className="dropdown">
                 <Button onClick={handleProfileClick} className="drop">Profile</Button>
-                <Button onClick={handleDashboardClick}>User DashBoard</Button>
-                <Button onClick={() => navigate("/chef/dashboard")}>Chef Dashboard</Button>
-                <Button onClick={() => navigate("/admin/dashboard")}>Admin Dashboard</Button>
+                {user.role === "admin" && (
+                  <Button onClick={() => navigate("/admin/dashboard")}>Admin Dashboard</Button>
+                )}
+                {user.role === "chef" && (
+                  <Button onClick={() => navigate("/chef/dashboard")}>Chef Dashboard</Button>
+                )}
+                {(!user.role || user.role === "user") && (
+                  <Button onClick={handleDashboardClick}>Dashboard</Button>
+                )}
                 <Button onClick={handleSettingsClick}>Settings</Button>
                 <Button onClick={handleLogoutClick}>Logout</Button>
               </div>
